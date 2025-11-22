@@ -171,3 +171,310 @@
         }
     }
 }
+
+@media only screen and (min-width: 1200px) and (max-width: 1499px) {
+    .mainWrapper {
+        padding-left: 1.6666666666666667vw;
+        padding-right: 1.6666666666666667vw;
+        padding-top: 6.666666666666667vw;
+        padding-bottom: 6.666666666666667vw;
+        width: 50%;
+
+        .aboutMeContainer {
+            gap: 1.3888888888888888vw;
+
+            .content {
+                width: 72%;
+
+                .title {
+                    font-size: 3.3333333333333335vw;
+                }
+
+                .aboutMe {
+                    font-size: 1.25vw;
+                    margin-bottom: 0.6944444444444444vw;
+
+                    &:not(:last-child) {
+                        margin-top: 2.7777777777777777vw;
+                    }
+                }
+            }
+        }
+
+        .about {
+            margin-top: 4.166666666666667vw;
+
+            .sectionTitle {
+                font-size: 2.5vw;
+                margin-bottom: 1.3888888888888888vw;
+            }
+
+            .aboutText {
+                font-size: 1.25vw;
+            }
+        }
+
+        .workExperience {
+            margin-top: 4.166666666666667vw;
+            margin-bottom: 1.3888888888888888vw;
+
+            .sectionTitle {
+                font-size: 2.5vw;
+                margin-bottom: 1.3888888888888888vw;
+            }
+
+            .experienceList {
+                gap: 2.0833333333333335vw;
+
+                .experienceItem {
+                    .companyProfile {
+                        gap: 0.6944444444444444vw;
+
+                        .companyInfo {
+                            gap: 0.3472222222222222vw;
+
+                            .companyName {
+                                font-size: 1.25vw;
+                            }
+
+                            .jobTitle {
+                                font-size: 1.1111111111111112vw;
+                            }
+                        }
+                    }
+
+                    .jobDuration {
+                        font-size: 0.9722222222222222vw;
+                    }
+                }
+            }
+        }
+
+        .skills {
+            margin-top: 4.166666666666667vw;
+            margin-bottom: 1.3888888888888888vw;
+
+            .sectionTitle {
+                font-size: 2.5vw;
+                margin-bottom: 1.3888888888888888vw;
+            }
+
+            .skillsList {
+                gap: 1.0416666666666667vw;
+
+                .skillItem {
+                    font-size: 0.9722222222222222vw;
+                    padding: 0.5555555555555556vw 0.8333333333333334vw;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .mainWrapper {
+        width: 90%;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 70px;
+        padding-bottom: 70px;
+
+        .aboutMeContainer {
+            justify-content: space-between;
+            gap: 0;
+
+            .content {
+                width: 75%;
+
+                .title {
+                    font-size: 38px;
+                }
+
+                .aboutMe {
+                    font-size: 16px;
+                    margin-bottom: 20px;
+
+                    &:not(:last-child) {
+                        margin-top: 30px;
+                    }
+                }
+            }
+
+            .profilePicture {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        .about {
+            margin-top: 50px;
+
+            .sectionTitle {
+                font-size: 30px;
+                margin-bottom: 15px;
+            }
+
+            .aboutText {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+        }
+
+        .workExperience {
+            margin-top: 50px;
+
+            .sectionTitle {
+                font-size: 30px;
+            }
+
+            .experienceList {
+                gap: 25px;
+
+                .experienceItem {
+                    flex-direction: row;
+
+                    .companyProfile {
+                        gap: 10px;
+
+                        .companyInfo {
+                            .companyName {
+                                font-size: 16px;
+                            }
+
+                            .jobTitle {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+
+                    .jobDuration {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+        .skills {
+            margin-top: 50px;
+
+            .sectionTitle {
+                font-size: 30px;
+            }
+
+            .skillsList {
+                gap: 12px;
+
+                .skillItem {
+                    font-size: 13px;
+                    padding: 7px 10px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .mainWrapper {
+        width: 100%;
+        padding: 50px;
+
+        .aboutMeContainer {
+            flex-direction: column;
+            gap: 25px;
+            align-items: flex-start;
+
+            .content {
+                width: 100%;
+
+                .title {
+                    font-size: 32px;
+                    letter-spacing: -1px;
+                }
+
+                .aboutMe {
+                    font-size: 16px;
+
+                    &:not(:last-child) {
+                        margin-top: 25px;
+                    }
+                }
+            }
+
+            .profilePicture {
+                width: 180px;
+                height: 180px;
+                margin: 0 auto;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        .about {
+            margin-top: 40px;
+
+            .sectionTitle {
+                font-size: 28px;
+            }
+
+            .aboutText {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+        }
+
+        .workExperience {
+            margin-top: 40px;
+
+            .sectionTitle {
+                font-size: 28px;
+            }
+
+            .experienceList {
+                gap: 30px;
+
+                .experienceItem {
+                    align-items: flex-start;
+                    gap: 10px;
+
+                    .companyProfile {
+                        .companyInfo {
+                            .companyName {
+                                font-size: 16px;
+                            }
+
+                            .jobTitle {
+                                font-size: 14px;
+                                line-height: 20px;
+                            }
+                        }
+                    }
+
+                    .jobDuration {
+                        font-size: 13px;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+
+        .skills {
+            margin-top: 40px;
+
+            .sectionTitle {
+                font-size: 28px;
+            }
+
+            .skillsList {
+                gap: 10px;
+
+                .skillItem {
+                    font-size: 13px;
+                    padding: 6px 10px;
+                }
+            }
+        }
+    }
+}
