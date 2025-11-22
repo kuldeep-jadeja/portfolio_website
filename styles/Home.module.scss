@@ -376,7 +376,7 @@
 @media only screen and (min-width: 320px) and (max-width: 767px) {
     .mainWrapper {
         width: 100%;
-        padding: 50px;
+        padding: 50px 20px;
 
         .aboutMeContainer {
             flex-direction: column;
@@ -438,6 +438,11 @@
                 .experienceItem {
                     align-items: flex-start;
                     gap: 10px;
+                    flex-direction: column;
+                    width: 100%;
+                    margin-bottom: 5px;
+                    padding-bottom: 15px;
+                    border-bottom: 1px solid var(--border-color);
 
                     .companyProfile {
                         .companyInfo {
@@ -455,6 +460,9 @@
                     .jobDuration {
                         font-size: 13px;
                         white-space: nowrap;
+                        width: 100%;
+                        margin-top: 10px;
+                        margin-left: 50px;
                     }
                 }
             }
