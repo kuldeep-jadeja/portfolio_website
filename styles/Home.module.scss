@@ -1,0 +1,173 @@
+.mainWrapper {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 96px;
+    padding-bottom: 96px;
+    width: 50%;
+    margin: 0 auto;
+
+    .aboutMeContainer {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .content {
+            width: 72%;
+
+            .title {
+                font-family: var(--font-helvetica-neue);
+                font-size: 48px;
+                letter-spacing: -2px;
+                color: var(--text-color);
+            }
+
+            .aboutMe {
+                font-family: var(--font-sf-mono-regular);
+                font-size: 18px;
+                color: var(--text-color);
+                margin-bottom: 10px;
+
+                &:not(:last-child) {
+                    margin-top: 40px;
+                }
+            }
+        }
+
+        .profilePicture {
+            border-radius: 100%;
+            overflow: hidden;
+
+            &:hover {
+                img {
+                    transform: scale(1.1);
+                }
+            }
+
+            img {
+                object-fit: cover;
+                width: auto;
+                height: 100%;
+                transition: transform 0.3s ease-in-out;
+            }
+        }
+    }
+
+    .about {
+        margin-top: 60px;
+
+        .sectionTitle {
+            font-family: var(--font-helvetica-neue);
+            font-size: 36px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .aboutText {
+            font-family: var(--font-helvetica-neue);
+            font-size: 18px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+    }
+
+    .workExperience {
+        margin-top: 60px;
+        margin-bottom: 20px;
+
+        .sectionTitle {
+            font-family: var(--font-helvetica-neue);
+            font-size: 36px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .experienceList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+
+            .experienceItem {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .companyProfile {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+
+                    .logoWrapper {
+                        img {
+                            border: 1px solid var(--border-color);
+                            border-radius: 100%;
+                            object-fit: cover;
+                        }
+                    }
+
+                    .companyInfo {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+
+                        .companyName {
+                            font-family: var(--font-helvetica-neue);
+                            font-size: 18px;
+                            color: var(--text-color);
+                        }
+
+                        .jobTitle {
+                            font-family: var(--font-sf-mono-medium);
+                            font-size: 16px;
+                            color: var(--text-color);
+                        }
+                    }
+                }
+
+                .jobDuration {
+                    font-family: var(--font-sf-mono-regular);
+                    font-size: 14px;
+                    color: var(--text-color);
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+
+    .skills {
+        margin-top: 60px;
+        margin-bottom: 20px;
+
+        .sectionTitle {
+            font-family: var(--font-helvetica-neue);
+            font-size: 36px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .skillsList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+
+            .skillItem {
+                cursor: crosshair;
+                font-family: var(--font-sf-mono-regular);
+                font-size: 14px;
+                color: var(--background);
+                padding: 8px 12px;
+                background-color: var(--text-color);
+                border-radius: 8px;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
