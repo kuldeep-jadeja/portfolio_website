@@ -1,4 +1,4 @@
-import { Github, Home } from "lucide-react";
+import { FileBadge, Github, Home } from "lucide-react";
 import styles from "./Dock.module.scss";
 import { cloneElement, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import Link from "next/link";
 const defaultItems = [
     { id: 'home', icon: <Home />, label: 'Home', href: "/" },
     { id: 'github', icon: <Github />, label: 'Github', href: "https://github.com/kuldeep-jadeja/", target: "_blank" },
+    { id: 'resume', icon: <FileBadge />, label: 'Resume', href: "https://files.kuldeepjadeja.dev/files/Resume/kuldeepsinh_Resume.pdf", target: "_blank" },
 ];
 
 export default function Dock({
@@ -58,6 +59,7 @@ export default function Dock({
                     href={item.href || '#'}
                     ref={(el) => (itemRefs.current[index] = el)}
                     className={styles.navItem}
+                    title={item.label}
                     onClick={() => handleClick(index, item, item.onClick)}
                     aria-label={item.label}
                     target={item.target}

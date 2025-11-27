@@ -2,6 +2,8 @@ import styles from "../styles/Home.module.scss";
 import MainWrapper from "@/components/MainWrapper/MainWrapper";
 import Dock from "@/components/Dock/Dock";
 import Image from "next/image";
+import Link from "next/link";
+import { Github, Globe, LibraryBig } from "lucide-react";
 
 export default function Home() {
   return (
@@ -89,6 +91,76 @@ export default function Home() {
             <li className={styles.skillItem}>CSS3</li>
             <li className={styles.skillItem}>RESTful APIs</li>
           </ul>
+        </div>
+
+        {/* Projects */}
+        <div className={styles.projectsShowCase}>
+          <div className={styles.pill}>
+            <h2 className={styles.sectionPill}>Projects</h2>
+            <h3 className={styles.sectionSubtitle}>Check out my latest work</h3>
+            <p className={styles.sectionDescription}>I've worked on a variety of projects, from simple websites to complex web applications. Here are a few of my favorites.</p>
+          </div>
+
+          <div className={styles.projectCards}>
+            <div className={styles.projectCard}>
+              <div className={styles.imageWrapper}>
+                <Image src="/images/Award-winning-slider.gif" alt="Project 1" width={350} height={200} />
+              </div>
+              <div className={styles.content}>
+                <h3 className={styles.projectTitle}>Award Winning Slider</h3>
+                <p className={styles.projectDescription}>A stunning, modern image carousel with synchronized text animations and smooth transitions. Built with vanilla JavaScript, jQuery, Slick Carousel, and GSAP animations.</p>
+                <div className={styles.pillsContainer}>
+                  <div className={styles.projectTechStack}>
+                    <span className={styles.techPills}>HTML5</span>
+                    <span className={styles.techPills}>CSS3</span>
+                    <span className={styles.techPills}>JavaScript</span>
+                    <span className={styles.techPills}>jQuery</span>
+                    <span className={styles.techPills}>Slick Carousel</span>
+                  </div>
+                  <div className={styles.projectLinks}>
+                    <div className={styles.projectPill}>
+                      <Globe strokeWidth={1.5} size={15} /><Link href="https://award-winning-slider.kuldeepjadeja.dev/" target="_blank" rel="noopener noreferrer">View Project</Link>
+                    </div>
+                    <div className={styles.projectPill}>
+                      <LibraryBig size={16} strokeWidth={1.5} /> <Link href="https://github.com/kuldeep-jadeja/AwardWinningSlider#readme" target="_blank" rel="noopener noreferrer">View Readme</Link>
+                    </div>
+                    <div className={styles.projectPill}>
+                      <Github size={16} strokeWidth={1.5} /><Link href="https://github.com/kuldeep-jadeja/AwardWinningSlider" target="_blank" rel="noopener noreferrer">View Source</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.projectCard}>
+              <div className={styles.imageWrapper}>
+                <Image src="/images/file-server.gif" alt="Project 1" width={350} height={200} />
+              </div>
+              <div className={styles.content}>
+                <h3 className={styles.projectTitle}>Ultimate Self-Hosted File Server</h3>
+                <p className={styles.projectDescription}>🚀 A powerful and elegant Node.js file server powered by Express and Flmngr for seamless file management.  feature-rich Flmngr library, intuitive web interface for all your file management needs.</p>
+                <div className={styles.pillsContainer}>
+                  <div className={styles.projectTechStack}>
+                    <span className={styles.techPills}>Node.js</span>
+                    <span className={styles.techPills}>Express.js</span>
+                    <span className={styles.techPills}>Flmngr</span>
+                    <span className={styles.techPills}>Multer</span>
+                    <span className={styles.techPills}>HTML5</span>
+                  </div>
+                  <div className={styles.projectLinks}>
+                    <div className={styles.projectPill}>
+                      <Globe strokeWidth={1.5} size={15} /><Link href="https://files.kuldeepjadeja.dev/file-server" target="_blank" rel="noopener noreferrer">View Project</Link>
+                    </div>
+                    <div className={styles.projectPill}>
+                      <LibraryBig size={16} strokeWidth={1.5} /> <Link href="https://github.com/kuldeep-jadeja/clipper-file-server#readme" target="_blank" rel="noopener noreferrer">View Readme</Link>
+                    </div>
+                    <div className={styles.projectPill}>
+                      <Github size={16} strokeWidth={1.5} /><Link href="https://github.com/kuldeep-jadeja/clipper-file-server" target="_blank" rel="noopener noreferrer">View Source</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -170,6 +170,146 @@
             }
         }
     }
+
+    .projectsShowCase {
+        margin-top: 60px;
+        margin-bottom: 20px;
+
+        .pill {
+            text-align: center;
+
+            .sectionPill {
+                display: inline-block;
+                font-family: var(--font-helvetica-neue);
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 28px;
+                padding: 8px 12px;
+                border-radius: 12px;
+                color: var(--background);
+                background: var(--text-color);
+            }
+
+            .sectionSubtitle {
+                font-family: var(--font-helvetica-neue-medium);
+                font-size: 48px;
+                letter-spacing: -1px;
+                color: var(--text-color);
+                margin-bottom: 12px;
+            }
+
+            .sectionDescription {
+                font-family: var(--font-sf-mono-regular);
+                font-size: 18px;
+                color: var(--text-color);
+                line-height: 1.6;
+                margin-bottom: 30px;
+                letter-spacing: -1px;
+                text-align: center;
+            }
+        }
+
+        .projectCards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+
+            .projectCard {
+                width: calc(50% - 10px);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+
+                .imageWrapper {
+                    margin-bottom: 12px;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transition: transform 0.3s ease-in-out;
+
+                        &:hover {
+                            transform: scale(1.05);
+                        }
+                    }
+                }
+
+                .content {
+                    padding: 15px;
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+
+                    .projectTitle {
+                        font-family: var(--font-helvetica-neue-medium);
+                        font-size: 20px;
+                        font-weight: 500;
+                        color: var(--text-color);
+                        letter-spacing: 0.8px;
+                        margin-bottom: 8px;
+                    }
+
+                    .projectDescription {
+                        font-family: var(--font-helvetica-neue);
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: var(--text-color);
+                        line-height: 1.4;
+                        margin-bottom: 20px;
+                    }
+
+                    .pillsContainer {
+                        margin-top: auto;
+                        margin-bottom: 5px;
+
+                        .projectTechStack {
+                            display: flex;
+                            gap: 8px;
+                            flex-wrap: wrap;
+
+                            .techPills {
+                                font-family: var(--font-sf-mono-regular);
+                                font-size: 12px;
+                                color: var(--gray-pill-text-color);
+                                padding: 4px 6px;
+                                background-color: var(--gray-pill-color);
+                                border-radius: 6px;
+                            }
+                        }
+
+                        .projectLinks {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                            margin-top: 10px;
+
+                            .projectPill {
+                                display: flex;
+                                gap: 5px;
+                                align-items: center;
+                                font-family: var(--font-helvetica-neue);
+                                font-weight: 400;
+                                font-size: 12px;
+                                line-height: 28px;
+                                padding: 0px 4px;
+                                border-radius: 8px;
+                                color: var(--background);
+                                background: var(--text-color);
+                                text-decoration: none;
+
+                                &:hover {
+                                    opacity: 0.8;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1499px) {
@@ -177,8 +317,8 @@
         padding-left: 1.6666666666666667vw;
         padding-right: 1.6666666666666667vw;
         padding-top: 6.666666666666667vw;
-        padding-bottom: 6.666666666666667vw;
-        width: 50%;
+        padding-bottom: 7.967vw;
+        width: 70%;
 
         .aboutMeContainer {
             gap: 1.3888888888888888vw;
@@ -265,6 +405,75 @@
                 .skillItem {
                     font-size: 0.9722222222222222vw;
                     padding: 0.5555555555555556vw 0.8333333333333334vw;
+                }
+            }
+        }
+
+        .projectsShowCase {
+            margin-top: 4.166666666666667vw;
+            margin-bottom: 1.3888888888888888vw;
+
+            .pill {
+                .sectionPill {
+                    font-size: 0.9722222222222222vw;
+                    padding: 0.5555555555555556vw 0.8333333333333334vw;
+                }
+
+                .sectionSubtitle {
+                    font-size: 3.3333333333333335vw;
+                    margin-bottom: 0.8333333333333334vw;
+                }
+
+                .sectionDescription {
+                    font-size: 1.25vw;
+                    margin-bottom: 2.0833333333333335vw;
+                }
+            }
+
+            .projectCards {
+                .projectCard {
+                    .imageWrapper {
+                        margin-bottom: 0.8333333333333334vw;
+                    }
+
+                    .content {
+                        padding: 1.0416666666666667vw;
+
+                        .projectTitle {
+                            font-size: 1.3888888888888888vw;
+                            margin-bottom: 0.5555555555555556vw;
+                        }
+
+                        .projectDescription {
+                            font-size: 0.9722222222222222vw;
+                            margin-bottom: 1.3888888888888888vw;
+                        }
+
+                        .pillsContainer {
+                            margin-bottom: 0.3472222222222222vw;
+
+                            .projectTechStack {
+                                gap: 0.5555555555555556vw;
+
+                                .techPills {
+                                    font-size: 0.8333333333333334vw;
+                                    padding: 0.2777777777777778vw
+                                        0.4166666666666667vw;
+                                }
+                            }
+
+                            .projectLinks {
+                                gap: 0.6944444444444444vw;
+                                margin-top: 0.6944444444444444vw;
+
+                                .projectPill {
+                                    gap: 0.3472222222222222vw;
+                                    font-size: 0.9722222222222222vw;
+                                    padding: 2px 0.5555555555555556vw;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -367,6 +576,90 @@
                 .skillItem {
                     font-size: 13px;
                     padding: 7px 10px;
+                }
+            }
+        }
+
+        .projectsShowCase {
+            margin-top: 50px;
+            margin-bottom: 20px;
+            padding: 0 20px;
+
+            .pill {
+                .sectionPill {
+                    font-size: 13px;
+                    padding: 0px 10px;
+                    border-radius: 10px;
+                    margin-bottom: 5px;
+                }
+
+                .sectionSubtitle {
+                    font-size: 36px;
+                    margin-bottom: 10px;
+                }
+
+                .sectionDescription {
+                    font-size: 16px;
+                    line-height: 1.5;
+                    margin-bottom: 25px;
+                }
+            }
+
+            .projectCards {
+                gap: 20px;
+
+                .projectCard {
+                    width: calc(50% - 10px);
+                    border-radius: 10px;
+
+                    .imageWrapper {
+                        margin-bottom: 10px;
+
+                        img {
+                            height: 220px;
+                            object-fit: cover;
+                        }
+                    }
+
+                    .content {
+                        padding: 12px;
+
+                        .projectTitle {
+                            font-size: 18px;
+                            margin-bottom: 6px;
+                        }
+
+                        .projectDescription {
+                            font-size: 13px;
+                            margin-bottom: 16px;
+                        }
+
+                        .pillsContainer {
+                            margin-bottom: 4px;
+
+                            .projectTechStack {
+                                gap: 6px;
+
+                                .techPills {
+                                    font-size: 11px;
+                                    padding: 4px 6px;
+                                    border-radius: 5px;
+                                }
+                            }
+
+                            .projectLinks {
+                                gap: 8px;
+                                margin-top: 8px;
+
+                                .projectPill {
+                                    font-size: 11px;
+                                    line-height: 24px;
+                                    padding: 0px 4px;
+                                    border-radius: 6px;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -481,6 +774,97 @@
                 .skillItem {
                     font-size: 13px;
                     padding: 6px 10px;
+                }
+            }
+        }
+
+        .projectsShowCase {
+            margin-top: 40px;
+            margin-bottom: 60px;
+            padding: 0 16px;
+
+            .pill {
+                .sectionPill {
+                    font-size: 12px;
+                    padding: 0 10px;
+                    border-radius: 8px;
+                    margin-bottom: 10px;
+                }
+
+                .sectionSubtitle {
+                    font-size: 26px;
+                    line-height: 32px;
+                    margin-bottom: 8px;
+                    letter-spacing: -0.5px;
+                }
+
+                .sectionDescription {
+                    font-size: 14px;
+                    line-height: 1.4;
+                    margin-bottom: 20px;
+                    letter-spacing: -0.5px;
+                }
+            }
+
+            .projectCards {
+                gap: 16px;
+                flex-direction: column;
+
+                .projectCard {
+                    width: 100%;
+                    border-radius: 10px;
+
+                    .imageWrapper {
+                        margin-bottom: 10px;
+
+                        img {
+                            width: 100%;
+                            height: 180px;
+                            object-fit: cover;
+                        }
+                    }
+
+                    .content {
+                        padding: 12px;
+
+                        .projectTitle {
+                            font-size: 16px;
+                            margin-bottom: 6px;
+                            letter-spacing: 0.6px;
+                        }
+
+                        .projectDescription {
+                            font-size: 13px;
+                            line-height: 1.4;
+                            margin-bottom: 14px;
+                        }
+
+                        .pillsContainer {
+                            margin-bottom: 4px;
+
+                            .projectTechStack {
+                                gap: 6px;
+
+                                .techPills {
+                                    font-size: 11px;
+                                    padding: 3px 5px;
+                                    border-radius: 5px;
+                                }
+                            }
+
+                            .projectLinks {
+                                gap: 8px;
+                                margin-top: 8px;
+
+                                .projectPill {
+                                    font-size: 11px;
+                                    line-height: 20px;
+                                    padding: 0px 4px;
+                                    border-radius: 6px;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
