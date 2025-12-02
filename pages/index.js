@@ -14,7 +14,7 @@ export default function Home() {
         <div className={styles.aboutMeContainer}>
           <div className={styles.content}>
             <h1 className={styles.title}>Hi, I'm Kuldeepsinh Jadeja 👋</h1>
-            <p className={styles.aboutMe}>Passionate about Tech, turned me into Software engineer❤️</p>
+            <p className={styles.aboutMe}>Passionate about Tech, turned me into Software engineer ❤️</p>
             <p className={styles.aboutMe}>I love building things and helping people.</p>
           </div>
           <div className={styles.profilePicture}>
@@ -107,7 +107,7 @@ export default function Home() {
                 <Image src="/images/Award-winning-slider.gif" alt="Project 1" width={350} height={200} />
               </div>
               <div className={styles.content}>
-                <h3 className={styles.projectTitle}>Award Winning Slider</h3>
+                <h3 className={styles.projectTitle}>Award Winning Slider 🎠</h3>
                 <p className={styles.projectDescription}>A stunning, modern image carousel with synchronized text animations and smooth transitions. Built with vanilla JavaScript, jQuery, Slick Carousel, and GSAP animations.</p>
                 <div className={styles.pillsContainer}>
                   <div className={styles.projectTechStack}>
@@ -136,7 +136,7 @@ export default function Home() {
                 <Image src="/images/file-server.gif" alt="Project 1" width={350} height={200} />
               </div>
               <div className={styles.content}>
-                <h3 className={styles.projectTitle}>Ultimate Self-Hosted File Server</h3>
+                <h3 className={styles.projectTitle}>Ultimate Self-Hosted File Server 💪🏻</h3>
                 <p className={styles.projectDescription}>🚀 A powerful and elegant Node.js file server powered by Express and Flmngr for seamless file management.  feature-rich Flmngr library, intuitive web interface for all your file management needs.</p>
                 <div className={styles.pillsContainer}>
                   <div className={styles.projectTechStack}>
@@ -155,6 +155,38 @@ export default function Home() {
                     </div>
                     <div className={styles.projectPill}>
                       <Github size={16} strokeWidth={1.5} /><Link href="https://github.com/kuldeep-jadeja/clipper-file-server" target="_blank" rel="noopener noreferrer">View Source</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.projectCard}>
+              <div className={styles.imageWrapper}>
+                <Image src="/images/clip-final.gif" alt="Ultimate Clippper" width={350} height={200} />
+              </div>
+              <div className={styles.content}>
+                <h3 className={styles.projectTitle}>Automated Twitch Clipper ⚡</h3>
+                <p className={styles.projectDescription}>Automatically detect viral twitch moments, create clips 🎬, manage your content library with AI-powered tools and Automatically posts on Instagram and Youtube by Converting into Shorts Format  🚀</p>
+                <div className={styles.pillsContainer}>
+                  <div className={styles.projectTechStack}>
+                    <span className={styles.techPills}>Next.Js</span>
+                    <span className={styles.techPills}>Node.js</span>
+                    <span className={styles.techPills}>Express.js</span>
+                    <span className={styles.techPills}>MongoDB</span>
+                    <span className={styles.techPills}>Redis</span>
+                    <span className={styles.techPills}>BullMQ</span>
+                    <span className={styles.techPills}>Flmngr</span>
+                    <span className={styles.techPills}>Axios</span>
+                    <span className={styles.techPills}>Twitch API</span>
+                    <span className={styles.techPills}>FFmpeg</span>
+                    <span className={styles.techPills}>Openrouter API</span>
+                  </div>
+                  <div className={styles.projectLinks}>
+                    <div className={styles.projectPill}>
+                      <Globe strokeWidth={1.5} size={15} /><Link href="#">Sorry Can't Share</Link>
+                    </div>
+                    <div className={styles.projectPill}>
+                      <Github size={16} strokeWidth={1.5} /><Link href="#">Private Soon Public ❤️</Link>
                     </div>
                   </div>
                 </div>
