@@ -1,12 +1,14 @@
-import { FileBadge, Github, Home } from "lucide-react";
+import { FileBadge, Github, Home, LibraryBig } from "lucide-react";
 import styles from "./Dock.module.scss";
-import { cloneElement, useLayoutEffect, useRef, useState } from "react";
+import { cloneElement, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const defaultItems = [
     { id: 'home', icon: <Home />, label: 'Home', href: "/" },
     { id: 'github', icon: <Github />, label: 'Github', href: "https://github.com/kuldeep-jadeja/", target: "_blank" },
     { id: 'resume', icon: <FileBadge />, label: 'Resume', href: "https://files.kuldeepjadeja.dev/files/Resume/kuldeepsinh_Resume.pdf", target: "_blank" },
+    { id: 'readme', icon: <LibraryBig />, label: 'Readme', href: "/readme" },
 ];
 
 export default function Dock({
@@ -15,12 +17,20 @@ export default function Dock({
     onTabChange,
     iconClassName
 }) {
-
+    const router = useRouter();
     const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
     const [ready, setReady] = useState(false);
 
     const itemRefs = useRef([]);
     const limelightRef = useRef(null);
+
+    // Sync activeIndex with current route
+    useEffect(() => {
+        const currentIndex = items.findIndex(item => item.href === router.pathname);
+        if (currentIndex !== -1) {
+            setActiveIndex(currentIndex);
+        }
+    }, [router.pathname, items]);
 
     useLayoutEffect(() => {
         if (!items.length) return;

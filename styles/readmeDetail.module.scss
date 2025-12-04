@@ -1,0 +1,209 @@
+.mainWrapper {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 96px;
+    padding-bottom: 110px;
+    width: 50%;
+    margin: 0 auto;
+    max-width: 900px;
+    line-height: 1.6;
+    color: var(--text-color);
+    font-size: 16px;
+
+    // // Headings
+    // :global(h1),
+    // :global(h2),
+    // :global(h3),
+    // :global(h4),
+    // :global(h5),
+    // :global(h6) {
+    //     margin-top: 24px;
+    //     margin-bottom: 16px;
+    //     font-weight: 600;
+    //     line-height: 1.25;
+    // }
+
+    // :global(h1) {
+    //     font-size: 2em;
+    //     padding-bottom: 0.3em;
+    //     border-bottom: 1px solid var(--border-color);
+    // }
+
+    // :global(h2) {
+    //     font-size: 1.5em;
+    //     padding-bottom: 0.3em;
+    //     border-bottom: 1px solid #d0d7de;
+    // }
+
+    // :global(h3) {
+    //     font-size: 1.25em;
+    // }
+
+    // :global(h4) {
+    //     font-size: 1em;
+    // }
+
+    // :global(h5) {
+    //     font-size: 0.875em;
+    // }
+
+    // :global(h6) {
+    //     font-size: 0.85em;
+    // }
+
+    // // Paragraphs
+    // :global(p) {
+    //     margin-top: 0;
+    //     margin-bottom: 16px;
+    // }
+
+    // // Links
+    // :global(a) {
+    //     color: #0969da;
+    //     text-decoration: none;
+
+    //     &:hover {
+    //         text-decoration: underline;
+    //     }
+    // }
+
+    // // Lists
+    // :global(ul),
+    // :global(ol) {
+    //     margin-top: 0;
+    //     margin-bottom: 16px;
+    //     padding-left: 2em;
+    // }
+
+    // :global(li) {
+    //     margin-bottom: 0.25em;
+
+    //     & > :global(p) {
+    //         margin-bottom: 0.5em;
+    //     }
+    // }
+
+    // :global(li + li) {
+    //     margin-top: 0.25em;
+    // }
+
+    // // Code blocks
+    // :global(pre) {
+    //     background-color: #f6f8fa;
+    //     border-radius: 6px;
+    //     padding: 16px;
+    //     overflow: auto;
+    //     font-size: 85%;
+    //     line-height: 1.45;
+    //     margin-bottom: 16px;
+    // }
+
+    // :global(code) {
+    //     background-color: rgba(175, 184, 193, 0.2);
+    //     padding: 0.2em 0.4em;
+    //     border-radius: 6px;
+    //     font-size: 85%;
+    //     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    //         "Liberation Mono", monospace;
+    // }
+
+    // :global(pre code) {
+    //     background-color: transparent;
+    //     padding: 0;
+    //     font-size: 100%;
+    // }
+
+    // // Blockquotes
+    // :global(blockquote) {
+    //     padding: 0 1em;
+    //     border-left: 0.25em solid #d0d7de;
+    //     margin: 0 0 16px 0;
+
+    //     & > :global(:first-child) {
+    //         margin-top: 0;
+    //     }
+
+    //     & > :global(:last-child) {
+    //         margin-bottom: 0;
+    //     }
+    // }
+
+    // // Tables
+    // :global(table) {
+    //     border-spacing: 0;
+    //     border-collapse: collapse;
+    //     margin-bottom: 16px;
+    //     width: 100%;
+    //     overflow: auto;
+    //     display: block;
+    // }
+
+    // :global(table th),
+    // :global(table td) {
+    //     padding: 6px 13px;
+    //     border: 1px solid #d0d7de;
+    // }
+
+    // :global(table th) {
+    //     font-weight: 600;
+    //     background-color: #f6f8fa;
+    // }
+
+    // :global(table tr) {
+    //     background-color: #ffffff;
+    //     border-top: 1px solid #d0d7de;
+    // }
+
+    // :global(table tr:nth-child(2n)) {
+    //     background-color: #f6f8fa;
+    // }
+
+    // // Horizontal rule
+    // :global(hr) {
+    //     height: 0.25em;
+    //     padding: 0;
+    //     margin: 24px 0;
+    //     background-color: #d0d7de;
+    //     border: 0;
+    // }
+
+    // // Images
+    // :global(img) {
+    //     max-width: 100%;
+    //     height: auto;
+    //     border-radius: 6px;
+    //     margin: 16px 0;
+    // }
+
+    // // Task lists
+    // :global(input[type="checkbox"]) {
+    //     margin-right: 0.5em;
+    // }
+
+    // // Strong and emphasis
+    // :global(strong) {
+    //     font-weight: 600;
+    // }
+
+    // :global(em) {
+    //     font-style: italic;
+    // }
+
+    // // Responsive design
+    // @media (max-width: 1024px) {
+    //     width: 70%;
+    // }
+
+    // @media (max-width: 768px) {
+    //     width: 90%;
+    //     padding-left: 16px;
+    //     padding-right: 16px;
+    //     font-size: 14px;
+    // }
+
+    // @media (max-width: 480px) {
+    //     width: 100%;
+    //     padding-left: 12px;
+    //     padding-right: 12px;
+    // }
+}

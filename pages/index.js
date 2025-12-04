@@ -1,6 +1,4 @@
 import styles from "../styles/Home.module.scss";
-import MainWrapper from "@/components/MainWrapper/MainWrapper";
-import Dock from "@/components/Dock/Dock";
 import Image from "next/image";
 import Link from "next/link";
 import { Github, Globe, LibraryBig } from "lucide-react";
@@ -8,8 +6,6 @@ import { Github, Globe, LibraryBig } from "lucide-react";
 export default function Home() {
   return (
     <>
-      <MainWrapper />
-      <Dock />
       <div className={styles.mainWrapper}>
         <div className={styles.aboutMeContainer}>
           <div className={styles.content}>
