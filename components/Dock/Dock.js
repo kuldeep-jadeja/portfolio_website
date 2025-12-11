@@ -29,6 +29,8 @@ export default function Dock({
         const currentIndex = items.findIndex(item => item.href === router.pathname);
         if (currentIndex !== -1) {
             setActiveIndex(currentIndex);
+        } else {
+            setActiveIndex(defaultItems.length - 1); // Default to last item if no match
         }
     }, [router.pathname, items]);
 

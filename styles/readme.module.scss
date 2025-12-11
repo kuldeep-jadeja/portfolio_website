@@ -259,3 +259,217 @@
         }
     }
 }
+
+@media only screen and (min-width: 1200px) and (max-width: 1499px) {
+    .mainWrapper {
+        padding-left: 1.6666666666666667vw;
+        padding-right: 1.6666666666666667vw;
+        padding-top: 6.666666666666667vw;
+        padding-bottom: 6.666666666666667vw;
+
+        .title {
+            gap: 1.3888888888888888vw;
+            font-size: 3.3333333333333335vw;
+            margin-bottom: 2.0833333333333335vw;
+        }
+
+        .description {
+            font-size: 1.3888888888888888vw;
+            margin-bottom: 1.3888888888888888vw;
+        }
+
+        // Input Checklist
+        .checklist {
+            grid-template-columns: 2.0833333333333335vw auto;
+
+            input[type="checkbox"] {
+                width: 1.0416666666666667vw;
+                margin: 0 1.0416666666666667vw 0 0;
+            }
+        }
+
+        .readmeList {
+            margin-bottom: 1.3888888888888888vw;
+
+            .subTitle {
+                font-size: 1.25vw;
+                margin-top: 2.7777777777777777vw;
+                margin-bottom: 1.3888888888888888vw;
+            }
+
+            .projectList {
+                gap: 1.3888888888888888vw;
+
+                .projectItem {
+                    padding: 1.3888888888888888vw;
+
+                    .leftWrapper {
+                        gap: 1.0416666666666667vw;
+                    }
+
+                    .rightWrapper {
+                        .viewBtn {
+                            font-size: 0.9722222222222222vw;
+                            padding: 0.5555555555555556vw 0.8333333333333334vw;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .mainWrapper {
+        width: 80%;
+        padding: 60px 0;
+        margin: 0 auto;
+
+        .title {
+            font-size: 36px;
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .description {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Checklist */
+        .checklist {
+            --height: 120px;
+            grid-template-columns: 28px auto;
+
+            label {
+                font-size: 16px;
+                &::before {
+                    left: -24px;
+                }
+                &::after {
+                    left: -22px;
+                }
+            }
+
+            input[type="checkbox"] {
+                height: 14px;
+                width: 14px;
+                margin-right: 12px;
+            }
+        }
+
+        /* README List */
+        .readmeList {
+            margin-bottom: 20px;
+
+            .subTitle {
+                font-size: 16px;
+                margin-top: 35px;
+                margin-bottom: 18px;
+            }
+
+            .projectList {
+                gap: 16px;
+
+                .projectItem {
+                    padding: 18px;
+
+                    .leftWrapper {
+                        width: 70%;
+                        gap: 12px;
+                    }
+
+                    .rightWrapper {
+                        .viewBtn {
+                            font-size: 13px;
+                            padding: 8px 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .mainWrapper {
+        width: 90%;
+        padding: 40px 0px 100px;
+        margin: 0 auto;
+
+        .title {
+            font-size: 28px;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        /* Checklist Mobile */
+        .checklist {
+            --height: 100px;
+            grid-template-columns: 26px auto;
+
+            label {
+                font-size: 14px;
+
+                &::before {
+                    left: -22px;
+                    width: 6px;
+                }
+
+                &::after {
+                    left: -20px;
+                }
+            }
+
+            input[type="checkbox"] {
+                height: 12px;
+                width: 12px;
+                margin-right: 10px;
+            }
+        }
+
+        /* Readme List */
+        .readmeList {
+            margin-bottom: 15px;
+
+            .subTitle {
+                font-size: 16px;
+                margin-top: 30px;
+                margin-bottom: 16px;
+            }
+
+            .projectList {
+                gap: 14px;
+
+                .projectItem {
+                    padding: 16px;
+                    flex-direction: column;
+                    gap: 15px;
+
+                    .leftWrapper {
+                        width: 100%;
+                        gap: 12px;
+                    }
+
+                    .rightWrapper {
+                        width: 100%;
+                        display: flex;
+                        justify-content: flex-start;
+
+                        .viewBtn {
+                            font-size: 13px;
+                            padding: 8px 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
