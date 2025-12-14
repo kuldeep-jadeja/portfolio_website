@@ -1,4 +1,4 @@
-import { FileBadge, Github, Home, LibraryBig } from "lucide-react";
+import { FileBadge, Github, Home, LibraryBig, NotebookTabs } from "lucide-react";
 import styles from "./Dock.module.scss";
 import { cloneElement, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -9,6 +9,7 @@ const defaultItems = [
     { id: 'github', icon: <Github />, label: 'Github', href: "https://github.com/kuldeep-jadeja/", target: "_blank" },
     { id: 'resume', icon: <FileBadge />, label: 'Resume', href: "https://files.kuldeepjadeja.dev/files/Resume/kuldeepsinh_Resume.pdf", target: "_blank" },
     { id: 'readme', icon: <LibraryBig />, label: 'Readme', href: "/readme" },
+    { id: 'medium', icon: <NotebookTabs />, label: 'Medium', href: "/medium" },
 ];
 
 export default function Dock({
@@ -26,7 +27,19 @@ export default function Dock({
 
     // Sync activeIndex with current route
     useEffect(() => {
-        const currentIndex = items.findIndex(item => item.href === router.pathname);
+        const currentIndex = items.findIndex(item => {
+            if (!item.href || item.href === '#') return false;
+
+            // For external links, exact match only
+            if (item.target === "_blank") {
+                return item.href === router.pathname;
+            }
+
+            // For internal links, check if current path starts with item href
+            // This handles both exact matches and nested routes
+            return router.pathname === item.href || router.pathname.startsWith(item.href + '/');
+        });
+
         if (currentIndex !== -1) {
             setActiveIndex(currentIndex);
         } else {
