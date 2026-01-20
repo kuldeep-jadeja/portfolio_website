@@ -193,8 +193,12 @@
     @keyframes firework {
         0% {
             opacity: 1;
-            box-shadow: 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0,
-                0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0,
+            box-shadow:
+                0 0 0 -2px #4f29f0,
+                0 0 0 -2px #4f29f0,
+                0 0 0 -2px #4f29f0,
+                0 0 0 -2px #4f29f0,
+                0 0 0 -2px #4f29f0,
                 0 0 0 -2px #4f29f0;
         }
         30% {
@@ -202,9 +206,13 @@
         }
         100% {
             opacity: 0;
-            box-shadow: 0 -15px 0 0px #4f29f0, 14px -8px 0 0px #4f29f0,
-                14px 8px 0 0px #4f29f0, 0 15px 0 0px #4f29f0,
-                -14px 8px 0 0px #4f29f0, -14px -8px 0 0px #4f29f0;
+            box-shadow:
+                0 -15px 0 0px #4f29f0,
+                14px -8px 0 0px #4f29f0,
+                14px 8px 0 0px #4f29f0,
+                0 15px 0 0px #4f29f0,
+                -14px 8px 0 0px #4f29f0,
+                -14px -8px 0 0px #4f29f0;
         }
     }
 
@@ -412,7 +420,7 @@
 
         /* Checklist Mobile */
         .checklist {
-            --height: 100px;
+            --height: 100%;
             grid-template-columns: 26px auto;
 
             label {
