@@ -8,7 +8,7 @@ export default function MainWrapper({ children, defaultActiveIndex = 0 }) {
     return (
         <>
             <div className={styles.themeContainer}>
-                <button className={styles.themeToggle} onClick={toggleTheme}>
+                <button type='button' aria-label='Theme Toggle' className={styles.themeToggle} onClick={toggleTheme}>
                     {theme === 'light' ? (
                         <Sun size={24} strokeWidth={2} />
                     ) : (

@@ -1,10 +1,48 @@
 import { Notebook } from 'lucide-react';
 import styles from '../../styles/readme.module.scss';
 import Link from 'next/link';
+import Head from 'next/head';
 
 export default function Readme() {
     return (
         <>
+            <Head>
+                <title>Readme - Kuldeepsinh Jadeja Portfolio</title>
+                <link rel="canonical" href="https://kuldeepjadeja.dev/readme" />
+                <meta name="description"
+                    content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
+                <meta name="image" content="/images/readme.webp" />
+                <meta itemProp="name" content="Kuldeepsinh Jadeja - Software Engineer Portfolio" />
+                <meta itemProp="description"
+                    content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
+                <meta itemProp="image" content="/images/readme.webp" />
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:title" content="Readme - Kuldeepsinh Jadeja Portfolio" />
+                <meta name="twitter:description"
+                    content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
+                <meta name="twitter:site" content="@kuldeepjadeja" />
+                <meta name="twitter:creator" content="@kuldeepjadeja" />
+                <meta name="twitter:image:src" content="/images/readme.webp" />
+                <meta name="keywords"
+                    content="Kuldeep Jadeja, Software Engineer, React Developer, Readme,  Frontend Developer, JavaScript Developer, Portfolio" />
+                <meta name="mobile-web-app-capable" content="yes" />
+                <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+                <meta name="og:title" content="Readme - Kuldeepsinh Jadeja Portfolio" />
+                <meta name="og:description"
+                    content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
+                <meta name="og:image" content="/images/readme.webp" />
+                <meta name="og:url" content="https://kuldeepjadeja.dev/readme" />
+                <meta name="og:site_name" content="Kuldeep Jadeja Portfolio" />
+                <meta name="og:locale" content="en_US" />
+                <meta name="og:type" content="article" />
+                <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+                <link rel="apple-touch-icon-precomposed" href="images/favicon.png" />
+                <meta name="title" property="og:title"
+                    content="Readme - Kuldeepsinh Jadeja Portfolio" />
+                <meta name="image" property="og:image" content="/images/readme.webp" />
+                <meta name="author" content="Kuldeep Jadeja" />
+                <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+            </Head>
             <div className={styles.mainWrapper}>
                 <h1 className={styles.title}>Welcome to the Readme Page <Notebook size={40} /></h1>
 
@@ -63,10 +101,21 @@ export default function Readme() {
                         <div className={styles.projectItem}>
                             <div className={styles.leftWrapper}>
                                 <h3 className={styles.projectTitle}>My Portfolio ⚡</h3>
-                                <p className={styles.projectDescription}>A modern, responsive portfolio showcasing my journey as a software engineer  🚀</p>
+                                <p className={styles.projectDescription}>A modern, responsive portfolio showcasing my journey as a software engineer 🚀</p>
                             </div>
                             <div className={styles.rightWrapper}>
                                 <Link href="/readme/portfolio_website" className={styles.viewBtn}>View Readme</Link>
+                            </div>
+                        </div>
+                        <div className={styles.projectItem}>
+                            <div className={styles.leftWrapper}>
+                                <h3 className={styles.projectTitle}>Python Background Remover ⚡</h3>
+                                <p className={styles.projectDescription}>
+                                    A Python-based background remover that utilizes advanced image processing techniques to seamlessly remove backgrounds from images, providing a clean and professional result.
+                                </p>
+                            </div>
+                            <div className={styles.rightWrapper}>
+                                <Link href="/readme/Image-background-remover" className={styles.viewBtn}>View Readme</Link>
                             </div>
                         </div>
                     </div>

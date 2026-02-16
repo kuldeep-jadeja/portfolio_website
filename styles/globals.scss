@@ -13,6 +13,7 @@
     --font-helvetica-neue-medium: "HelveticaNeue-Medium";
     --font-helvetica-neue-bold: "HelveticaNeue-Bold";
     color-scheme: dark;
+    scroll-behavior: smooth;
 }
 
 /* Light theme variables */
@@ -27,42 +28,50 @@
 
 @font-face {
     font-family: "sf-mono-regular";
-    src: url("../public/fonts/sf-mono-regular.otf") format("opentype");
+    src: url("../public/fonts/SFMono-Regular.woff2") format("woff2");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "sf-mono-medium";
-    src: url("../public/fonts/sf-mono-medium.otf") format("opentype");
+    src: url("../public/fonts/SFMono-Medium.woff2") format("woff2");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "sf-mono-light";
-    src: url("../public/fonts/sf-mono-light.otf") format("opentype");
+    src: url("../public/fonts/SFMono-Light.woff2") format("woff2");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "sf-mono-bold";
-    src: url("../public/fonts/sf-mono-bold.otf") format("opentype");
+    src: url("../public/fonts/SFMono-Bold.woff2") format("woff2");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "sf-mono-heavy";
-    src: url("../public/fonts/sf-mono-heavy.otf") format("opentype");
+    src: url("../public/fonts/SFMono-Heavy.woff2") format("woff2");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "HelveticaNeue";
-    src: url("../public/fonts/HelveticaNeue.otf") format("opentype");
+    src: url("../public/fonts/HelveticaNeue.woff2") format("woff2");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "HelveticaNeue-Medium";
-    src: url("../public/fonts/HelveticaNeue-Medium.otf") format("opentype");
+    src: url("../public/fonts/HelveticaNeue-Medium.woff2") format("woff2");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "HelveticaNeue-Bold";
-    src: url("../public/fonts/HelveticaNeue-Bold.otf") format("opentype");
+    src: url("../public/fonts/HelveticaNeue-Bold.woff2") format("woff2");
+    font-display: swap;
 }
 
 html,

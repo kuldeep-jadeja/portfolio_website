@@ -9,6 +9,89 @@
     line-height: 1.6;
     color: var(--text-color);
     font-size: 16px;
+
+    .backBtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 20px;
+        font-family: var(--font-helvetica-neue-Medium);
+        color: var(--text-color);
+        opacity: 0.8;
+        position: relative;
+
+        &::after {
+            content: "";
+            width: 100%;
+            transform: scaleX(0);
+            transform-origin: center right;
+            height: 1px;
+            background-color: #f8f8f8;
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            transition: transform 600ms cubic-bezier(0.62, 0.05, 0.01, 0.99);
+        }
+
+        .arrowWrapper {
+            width: 15px;
+            height: auto;
+            overflow: hidden;
+            display: flex;
+            justify-content: end;
+            rotate: 180deg;
+
+            img {
+                width: 15px;
+                height: auto;
+                margin-right: 0px;
+                filter: invert(1);
+            }
+        }
+
+        &:hover {
+            &::after {
+                transform: scaleX(1);
+                transform-origin: center left;
+            }
+
+            .arrowWrapper {
+                img {
+                    &:last-child {
+                        margin-right: -100%;
+                        transition: margin-right 600ms
+                            cubic-bezier(0.62, 0.05, 0.01, 0.99);
+                    }
+                }
+            }
+        }
+    }
+
+    .backToTopBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+
+        a {
+            cursor: pointer;
+            z-index: 1000;
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+            padding: 4px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 15px;
+                height: auto;
+                rotate: 90deg;
+            }
+        }
+    }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1499px) {
@@ -19,6 +102,29 @@
         padding-bottom: 7.638888888888889vw;
         max-width: 62.5vw;
         font-size: 1.1111111111111112vw;
+    }
+}
+
+[data-theme="light"] {
+    .mainWrapper {
+        .backBtn {
+            &::after {
+                background-color: #333333;
+            }
+            .arrowWrapper {
+                img {
+                    filter: invert(0);
+                }
+            }
+        }
+    }
+
+    .backToTopBtn {
+        a {
+            img {
+                filter: invert(1);
+            }
+        }
     }
 }
 
