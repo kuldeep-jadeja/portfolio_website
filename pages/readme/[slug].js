@@ -1,24 +1,51 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from "rehype-raw";
-import { useState } from 'react';
 import styles from '../../styles/readmeDetail.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import Head from 'next/head';
 
-export default function readmeSlug({ markdown }) {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+function extractDescription(markdown) {
+    if (!markdown) return '';
+    const text = markdown
+        .replace(/[#>*`]/g, '')
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+        .slice(0, 160);
 
-    if (loading) return <p style={{ padding: 16 }}>Loading README…</p>;
-    if (error) return <p style={{ padding: 16, color: 'red' }}>Error: {error}</p>;
+    return text;
+}
 
+export default function ReadmeSlug({ markdown, slug }) {
+    const description = extractDescription(markdown);
+    const projectSchema = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": slug,
+        "description": description,
+        "codeRepository": `https://github.com/kuldeep-jadeja/${slug}`,
+        "author": {
+            "@type": "Person",
+            "name": "Kuldeep Jadeja",
+            "url": "https://kuldeepjadeja.dev"
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Kuldeep Jadeja"
+        },
+        "programmingLanguage": [
+            "JavaScript",
+            "Node.js",
+            "React"
+        ],
+        "runtimePlatform": "Web",
+        "url": `https://kuldeepjadeja.dev/readme/${slug}`,
+    };
     return (
         <>
             <Head>
                 <title>Readme - Kuldeepsinh Jadeja Portfolio</title>
-                <link rel="canonical" href="https://kuldeepjadeja.dev/readme" />
+                <link rel="canonical" href={`https://kuldeepjadeja.dev/readme/${slug}`} />
                 <meta name="description"
                     content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
                 <meta name="image" content="/images/readme.webp" />
@@ -41,17 +68,23 @@ export default function readmeSlug({ markdown }) {
                 <meta name="og:description"
                     content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
                 <meta name="og:image" content="/images/readme.webp" />
-                <meta name="og:url" content="https://kuldeepjadeja.dev/readme" />
+                <meta name="og:url" content={`https://kuldeepjadeja.dev/readme/${slug}`} />
                 <meta name="og:site_name" content="Kuldeep Jadeja Portfolio" />
                 <meta name="og:locale" content="en_US" />
                 <meta name="og:type" content="article" />
-                <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
-                <link rel="apple-touch-icon-precomposed" href="images/favicon.png" />
+                <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
+                <link rel="apple-touch-icon-precomposed" href="/images/favicon.png" />
                 <meta name="title" property="og:title"
                     content="Readme - Kuldeepsinh Jadeja Portfolio" />
                 <meta name="image" property="og:image" content="/images/readme.webp" />
                 <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+                <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(projectSchema),
+                    }}
+                />
             </Head>
             <div className={styles.mainWrapper}>
                 <Link className={styles.backBtn} href="/readme" >
@@ -61,10 +94,10 @@ export default function readmeSlug({ markdown }) {
                     </div>
                     Back to Readme Listing
                 </Link>
-                <div className='markdown-body markdown-body-light' id='#top'>
+                <div className='markdown-body markdown-body-light' id='top'>
                     <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{markdown}</ReactMarkdown>
                 </div>
-                <div className={styles.backToTopBtn} id="#top">
+                <div className={styles.backToTopBtn}>
                     <a href="#top" title="Back to Top">
                         <Image src="/images/arrow-left.svg" alt="Back to Top" width={20} height={20} />
                     </a>
@@ -74,29 +107,42 @@ export default function readmeSlug({ markdown }) {
     );
 }
 
-export async function getServerSideProps(context) {
-    const data = {
-        owner: 'kuldeep-jadeja',
-        repo: context.params.slug,
-        branch: 'main',
-        path: 'README.md',
-    };
+const REPOS = [
+    'AwardWinningSlider',
+    'clipper-file-server',
+    'portfolio_website',
+    'Image-background-remover',
+];
 
-    const url = `https://raw.githubusercontent.com/${data?.owner}/${data?.repo}/${data?.branch}/${data?.path}`;
+export async function getStaticPaths() {
+    const paths = REPOS.map((repo) => ({
+        params: { slug: repo },
+    }));
+
+    return {
+        paths,
+        fallback: 'blocking',
+    };
+}
+
+export async function getStaticProps({ params }) {
+    const { slug } = params;
+
+    const url = `https://raw.githubusercontent.com/kuldeep-jadeja/${slug}/main/README.md`;
 
     const response = await fetch(url);
 
     if (!response.ok) {
-        return res
-            .status(response.status)
-            .json({ error: `Failed to fetch README from GitHub`, status: response.status });
+        return { notFound: true };
     }
 
     const markdown = await response.text();
 
     return {
         props: {
-            markdown
-        }
+            markdown,
+            slug,
+        },
+        revalidate: 86400, // refresh every 24 hours
     };
 }

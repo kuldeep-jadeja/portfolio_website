@@ -5,6 +5,43 @@ import { Github, Globe, LibraryBig } from "lucide-react";
 import Head from "next/head";
 
 export default function Home() {
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Kuldeepsinh Jadeja",
+    "url": "https://kuldeepjadeja.dev",
+    "image": "https://kuldeepjadeja.dev/images/test(1).png",
+    "jobTitle": "Software Engineer",
+    "description":
+      "Software engineer specializing in React, Next.js, Node.js, and modern web technologies.",
+    "sameAs": [
+      "https://github.com/kuldeep-jadeja",
+      "https://medium.com/@kuldeepjadeja7",
+      "https://kuldeepjadeja.dev"
+    ],
+    "knowsAbout": [
+      "JavaScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "MongoDB",
+      "Express.js",
+      "Frontend Development",
+      "Full Stack Development"
+    ]
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Kuldeep Jadeja Portfolio",
+    "url": "https://kuldeepjadeja.dev",
+    "author": {
+      "@type": "Person",
+      "name": "Kuldeep Jadeja"
+    }
+  };
+
   return (
     <>
       <Head>
@@ -43,6 +80,18 @@ export default function Home() {
         <meta name="image" property="og:image" content="/images/Homepage.webp" />
         <meta name="author" content="Kuldeep Jadeja" />
         <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
       </Head>
       <div className={styles.mainWrapper}>
         <div className={styles.aboutMeContainer}>
