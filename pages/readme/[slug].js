@@ -78,7 +78,7 @@ export default function ReadmeSlug({ markdown, slug }) {
                     content="Readme - Kuldeepsinh Jadeja Portfolio" />
                 <meta name="image" property="og:image" content="/images/readme.webp" />
                 <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+                <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
