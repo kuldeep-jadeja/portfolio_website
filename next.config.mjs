@@ -9,7 +9,18 @@ const nextConfig = {
   ],
   images: {
     formats: ["image/avif", "image/webp"],
-    domains: ['miro.medium.com', 'cdn-images-1.medium.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'miro.medium.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn-images-1.medium.com',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

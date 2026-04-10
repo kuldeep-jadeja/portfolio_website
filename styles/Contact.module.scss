@@ -1,0 +1,217 @@
+.contactWrapper {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 96px;
+    padding-bottom: 96px;
+    width: 50%;
+    min-height: 100vh;
+    margin: 0 20px 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .backgroundVideo {
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        width: calc(100vw - 100px);
+        height: calc(100vh - 100px);
+        object-fit: cover;
+        z-index: -1;
+        border-radius: 24px;
+        clip-path: inset(0 round 24px);
+    }
+
+    .contactFormWrapper {
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+
+        .title {
+            font-family: var(--font-helvetica-neue-medium);
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-family: var(--font-helvetica-neue-light);
+            font-weight: 300;
+            color: var(--text-color);
+            font-size: 24px;
+            margin-bottom: 32px;
+        }
+
+        .rightWrapper {
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            background-color: rgba(17, 25, 40, 0.75);
+            border-radius: 20px;
+
+            .contactForm {
+                border-radius: 12px;
+                padding: 24px;
+
+                .formTitle {
+                    font-family: var(--font-helvetica-neue-medium);
+                    font-weight: 500;
+                    color: var(--text-color);
+                    font-size: 24px;
+                    margin-bottom: 16px;
+                }
+
+                .inputGrp {
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 16px;
+
+                    label {
+                        font-family: var(--font-helvetica-neue-light);
+                        font-weight: 300;
+                        color: var(--text-color);
+                        font-size: 14px;
+                        margin-bottom: 8px;
+                    }
+
+                    .formLabel {
+                        font-family: var(--font-helvetica-neue-light);
+                        font-weight: 300;
+                        color: var(--text-color);
+                        font-size: 16px;
+                        margin-bottom: 12px;
+                    }
+
+                    .radioWrapper {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;
+
+                        .radioLabel {
+                            position: relative;
+                            display: flex;
+                            gap: 10px;
+                            align-items: center;
+                            font-family: var(--font-helvetica-neue-light);
+                            font-weight: 300;
+                            color: var(--text-color);
+                            font-size: 14px;
+                            margin-bottom: 0;
+                            padding: 8px 12px 8px 10px;
+                            border-radius: 999px;
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            background-color: rgba(255, 255, 255, 0.05);
+                            cursor: pointer;
+                            transition:
+                                background-color 0.2s ease,
+                                border-color 0.2s ease,
+                                transform 0.2s ease,
+                                box-shadow 0.2s ease;
+
+                            &:hover {
+                                border-color: rgba(88, 238, 95, 0.6);
+                                background-color: rgba(88, 238, 95, 0.12);
+                            }
+
+                            .radioInput {
+                                position: absolute;
+                                opacity: 0;
+                                pointer-events: none;
+
+                                &:checked + .customRadio {
+                                    border-color: rgb(88, 238, 95);
+                                    background-color: rgba(88, 238, 95, 0.2);
+                                    box-shadow: 0 0 0 4px rgba(88, 238, 95, 0.2);
+                                }
+
+                                &:checked + .customRadio::after {
+                                    opacity: 1;
+                                    transform: translate(-50%, -50%) scale(1);
+                                }
+
+                                &:focus-visible + .customRadio {
+                                    box-shadow: 0 0 0 3px
+                                        rgba(88, 238, 95, 0.35);
+                                }
+                            }
+
+                            .radioInput:checked ~ .radioText {
+                                color: rgb(88, 238, 95);
+                                font-family: var(--font-helvetica-neue-medium);
+                            }
+
+                            .customRadio {
+                                width: 18px;
+                                height: 18px;
+                                border-radius: 50%;
+                                border: 2px solid var(--text-color);
+                                position: relative;
+                                transition:
+                                    border-color 0.2s ease,
+                                    background-color 0.2s ease,
+                                    box-shadow 0.2s ease;
+
+                                &::after {
+                                    content: "";
+                                    position: absolute;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%) scale(0.5);
+                                    width: 8px;
+                                    height: 8px;
+                                    border-radius: 50%;
+                                    background-color: rgb(88, 238, 95);
+                                    opacity: 0;
+                                    transition:
+                                        opacity 0.2s ease-in-out,
+                                        transform 0.2s ease-in-out;
+                                }
+                            }
+
+                            .radioText {
+                                line-height: 1;
+                            }
+                        }
+                    }
+
+                    input,
+                    textarea {
+                        padding: 12px;
+                        border-radius: 8px;
+                        border: none;
+                        background-color: rgba(255, 255, 255, 0.1);
+                        color: var(--text-color);
+                        font-family: var(--font-helvetica-neue-light);
+                        font-weight: 300;
+                        font-size: 14px;
+
+                        &:focus {
+                            outline: none;
+                            box-shadow: 0 0 0 2px rgb(88, 238, 95);
+                            background-color: rgba(255, 255, 255, 0.2);
+                        }
+                    }
+                }
+
+                .submitBtn {
+                    width: 100%;
+                    padding: 12px 24px;
+                    margin-top: 10px;
+                    border-radius: 8px;
+                    border: none;
+                    background-color: rgb(88, 238, 95);
+                    color: var(--background);
+                    font-family: var(--font-helvetica-neue-medium);
+                    font-weight: 500;
+                    font-size: 14px;
+                    cursor: pointer;
+                    transition: background-color 0.2s ease-in-out;
+
+                    &:hover {
+                        background-color: darken(rgb(88, 238, 95), 10%);
+                    }
+                }
+            }
+        }
+    }
+}

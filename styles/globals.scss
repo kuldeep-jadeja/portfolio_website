@@ -4,6 +4,7 @@
     --border-color: #333333;
     --gray-pill-color: #262626;
     --gray-pill-text-color: #e4e0e0;
+    --highlight-color: #ffff00;
     --font-sf-mono-regular: "sf-mono-regular";
     --font-sf-mono-medium: "sf-mono-medium";
     --font-sf-mono-light: "sf-mono-light";
@@ -24,6 +25,9 @@
     --gray-pill-color: #666666;
     --gray-pill-text-color: #ffffff;
     color-scheme: light;
+
+    // Highlight selectors for light theme
+    --highlight-color: #ffff00;
 }
 
 @font-face {
@@ -117,5 +121,15 @@ a {
 @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;
+
+        ::selection {
+            background-color: var(--highlight-color);
+            color: var(--background);
+        }
     }
+}
+
+[data-theme="light"] ::selection {
+    background-color: var(--highlight-color);
+    color: var(--text-color);
 }

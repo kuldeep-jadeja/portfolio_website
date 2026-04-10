@@ -1,4 +1,4 @@
-import { FileBadge, Github, Home, LibraryBig, NotebookTabs } from "lucide-react";
+import { FileBadge, Github, Home, LibraryBig, MessageCircleHeart, NotebookTabs } from "lucide-react";
 import styles from "./Dock.module.scss";
 import { cloneElement, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -10,6 +10,7 @@ const defaultItems = [
     { id: 'resume', icon: <FileBadge />, label: 'Resume', href: "https://files.kuldeepjadeja.dev/files/Resume/kuldeepsinh_Resume.pdf", target: "_blank" },
     { id: 'readme', icon: <LibraryBig />, label: 'Readme', href: "/readme" },
     { id: 'medium', icon: <NotebookTabs />, label: 'Medium', href: "/medium" },
+    {id:'contact', icon: <MessageCircleHeart />, label: 'Contact', href: "/contact" }
 ];
 
 export default function Dock({
