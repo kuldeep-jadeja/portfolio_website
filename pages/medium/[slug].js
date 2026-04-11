@@ -87,7 +87,7 @@ export default function MediumPageDetail({ article }) {
                     content={article.title} />
                 <meta name="image" property="og:image" content="/images/medium.webp" />
                 <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+                <link rel="icon" type="image/x-icon" href="images/favicon.png" />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{

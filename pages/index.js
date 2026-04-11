@@ -79,7 +79,7 @@ export default function Home() {
           content="Kuldeepsinh Jadeja - Software Engineer Portfolio" />
         <meta name="image" property="og:image" content="/images/Homepage.webp" />
         <meta name="author" content="Kuldeep Jadeja" />
-        <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="images/favicon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

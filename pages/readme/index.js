@@ -41,7 +41,7 @@ export default function Readme() {
                     content="Readme - Kuldeepsinh Jadeja Portfolio" />
                 <meta name="image" property="og:image" content="/images/readme.webp" />
                 <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+                <link rel="icon" type="image/x-icon" href="images/favicon.png" />
             </Head>
             <div className={styles.mainWrapper}>
                 <h1 className={styles.title}>Welcome to the Readme Page <Notebook size={40} /></h1>

@@ -65,7 +65,7 @@ export default function MediumPageList({ articles }) {
                     content="Medium - Kuldeepsinh Jadeja Portfolio" />
                 <meta name="image" property="og:image" content="/images/medium.webp" />
                 <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+                <link rel="icon" type="image/x-icon" href="images/favicon.png" />
             </Head>
             <main className={styles.container}>
                 <header className={styles.header}>

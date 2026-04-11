@@ -229,7 +229,7 @@ export default function Contact() {
                     content="Contact - Kuldeepsinh Jadeja" />
                 <meta name="image" property="og:image" content="/images/Homepage.webp" />
                 <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+                <link rel="icon" type="image/x-icon" href="images/favicon.png" />
             </Head>
             <section className={styles.contactWrapper}>
                 <video autoPlay loop muted className={styles.backgroundVideo}>
