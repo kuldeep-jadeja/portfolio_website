@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://kuldeepjadeja.dev
+
+# Sitemaps
+Sitemap: https://kuldeepjadeja.dev/sitemap.xml

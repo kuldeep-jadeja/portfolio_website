@@ -21,6 +21,7 @@
     ]
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "formidable": "^3.5.4",
     "formik": "^2.4.9",
     "github-markdown-css": "^5.8.1",
