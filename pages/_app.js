@@ -5,6 +5,7 @@ import Script from "next/script";
 import 'lenis/dist/lenis.css'
 import { useEffect } from "react";
 import MainWrapper from "@/components/MainWrapper/MainWrapper";
+import { Analytics } from '@vercel/analytics/next';
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -77,6 +78,7 @@ export default function App({ Component, pageProps }) {
           <Component {...pageProps} />
         </MainWrapper>
       </ThemeProvider>
+      <Analytics />
     </>
   );
 }
