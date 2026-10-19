@@ -1,61 +1,45 @@
-import styles from '../styles/github-markdown.css';
+import '../styles/github-markdown.css';
 import "../styles/globals.scss";
 import { ThemeProvider } from '../contexts/ThemeContext';
 import Script from "next/script";
 import 'lenis/dist/lenis.css'
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+import Lenis from "lenis";
 import MainWrapper from "@/components/MainWrapper/MainWrapper";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+
+  // Smooth scroll driven by the GSAP ticker so ScrollTrigger stays in sync
   useEffect(() => {
-    let lenis;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    import("lenis").then(({ default: Lenis }) => {
-      lenis = new Lenis({
-        autoRaf: true,
-        duration: 1.3,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smooth: true,
-        smoothTouch: false,
-        touchMultiplier: 1,
-        lerp: 0.05,
-        infinite: false,
-      });
+    const lenis = new Lenis({ lerp: 0.09, smoothWheel: true, anchors: true });
+    window.__lenis = lenis;
+    lenis.on("scroll", ScrollTrigger.update);
 
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-
-      requestAnimationFrame(raf);
-    });
+    const tick = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
-      if (lenis) lenis.destroy();
+      gsap.ticker.remove(tick);
+      lenis.destroy();
+      window.__lenis = undefined;
     };
   }, []);
-  // useEffect(() => {
-  //   const lenis = new Lenis({
-  //     autoRaf: true,
-  //     duration: 1.3,
-  //     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  //     smooth: true,
-  //     smoothTouch: false,
-  //     touchMultiplier: 1,
-  //     lerp: 0.05,
-  //     infinite: false,
-  //   });
 
-  //   function raf(time) {
-  //     lenis.raf(time)
-  //     requestAnimationFrame(raf)
-  //   }
-
-  //   requestAnimationFrame(raf)
-  //   return () => {
-  //     lenis.destroy();
-  //   }
-  // }, []);
+  // Reset scroll and recalculate triggers after client-side navigation
+  useEffect(() => {
+    const onRouteDone = () => {
+      window.__lenis?.scrollTo(0, { immediate: true });
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    };
+    router.events.on("routeChangeComplete", onRouteDone);
+    return () => router.events.off("routeChangeComplete", onRouteDone);
+  }, [router.events]);
 
   return (
     <>

@@ -1,0 +1,46 @@
+.marquee {
+    padding: clamp(40px, 6vw, 72px) 0;
+    border-block: 1px solid var(--line);
+    overflow: clip;
+    will-change: transform;
+}
+
+.row {
+    display: flex;
+    overflow: clip;
+
+    & + & {
+        margin-top: clamp(4px, 1vw, 12px);
+    }
+}
+
+.track {
+    display: flex;
+    flex: none;
+    will-change: transform;
+}
+
+.item {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(20px, 3vw, 44px);
+    padding-right: clamp(20px, 3vw, 44px);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(40px, 7.5vw, 112px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    color: var(--text);
+}
+
+.outline .item {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--muted);
+}
+
+.star {
+    font-size: 0.45em;
+    color: var(--accent-text);
+    -webkit-text-stroke: 0;
+}

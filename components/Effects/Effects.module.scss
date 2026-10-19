@@ -1,0 +1,44 @@
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 1001;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    pointer-events: none;
+}
+
+.cursorDot,
+.cursorRing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    border-radius: 50%;
+    visibility: hidden;
+}
+
+.cursorDot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    mix-blend-mode: difference;
+}
+
+.cursorRing {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    mix-blend-mode: difference;
+}
+
+@media (pointer: coarse) {
+    .cursorDot,
+    .cursorRing {
+        display: none;
+    }
+}
