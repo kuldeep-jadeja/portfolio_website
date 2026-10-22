@@ -180,15 +180,17 @@
     border-radius: 50%;
     overflow: hidden;
     background: var(--surface-2);
-    transition: transform 0.6s var(--ease-out);
+    transition: transform 0.4s var(--ease-out);
 
     img {
         object-fit: cover;
     }
 }
 
-.portrait:hover .photo {
-    transform: scale(1.12);
+@media (hover: hover) and (pointer: fine) {
+    .portrait:hover .photo {
+        transform: scale(1.12);
+    }
 }
 
 .badge {
@@ -246,13 +248,18 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     transition:
-        background-color 0.3s ease,
-        color 0.3s ease,
-        border-color 0.3s ease,
-        transform 0.3s var(--ease-out);
+        background-color var(--dur-hover) ease,
+        color var(--dur-hover) ease,
+        border-color var(--dur-hover) ease,
+        transform var(--dur-hover) var(--ease-out);
 
     svg {
-        transition: transform 0.3s var(--ease-out);
+        transition: transform var(--dur-hover) var(--ease-out);
+    }
+
+    &:active {
+        transform: scale(0.97);
+        transition-duration: var(--dur-press);
     }
 }
 
@@ -260,8 +267,10 @@
     background: var(--accent);
     color: var(--accent-ink);
 
-    &:hover svg {
-        transform: translateY(3px);
+    @media (hover: hover) and (pointer: fine) {
+        &:hover svg {
+            transform: translateY(3px);
+        }
     }
 }
 
@@ -269,11 +278,13 @@
     border: 1px solid var(--line);
     color: var(--text);
 
-    &:hover {
-        border-color: var(--text);
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            border-color: var(--text);
 
-        svg {
-            transform: translate(3px, -3px);
+            svg {
+                transform: translate(3px, -3px);
+            }
         }
     }
 }

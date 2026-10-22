@@ -16,17 +16,17 @@
 
 ## Pages
 
-- [Home](https://kuldeepjadeja.dev/): Profile, work experience, skills and featured projects.
-- [Contact](https://kuldeepjadeja.dev/contact): Contact form for job offers, freelance work and collaborations.
-- [Project READMEs](https://kuldeepjadeja.dev/readme): Index of documentation for open-source projects.
-- [Articles](https://kuldeepjadeja.dev/medium): Articles on web development, originally published on Medium.
+- [Home](https://kuldeep-jadeja.vercel.app/): Profile, work experience, skills and featured projects.
+- [Contact](https://kuldeep-jadeja.vercel.app/contact): Contact form for job offers, freelance work and collaborations.
+- [Project READMEs](https://kuldeep-jadeja.vercel.app/readme): Index of documentation for open-source projects.
+- [Articles](https://kuldeep-jadeja.vercel.app/medium): Articles on web development, originally published on Medium.
 
 ## Projects
 
-- [Award Winning Slider](https://kuldeepjadeja.dev/readme/AwardWinningSlider): Image carousel with synchronized text animations built with JavaScript, jQuery, Slick Carousel and GSAP.
-- [Self-Hosted File Server](https://kuldeepjadeja.dev/readme/clipper-file-server): Node.js and Express file server with a Flmngr web interface for managing files.
-- [Python Background Remover](https://kuldeepjadeja.dev/readme/Image-Background-Remover): FastAPI service using Rembg and ONNX Runtime to remove image backgrounds.
-- [Portfolio Website](https://kuldeepjadeja.dev/readme/portfolio_website): Source and notes for this Next.js portfolio site.
+- [Award Winning Slider](https://kuldeep-jadeja.vercel.app/readme/AwardWinningSlider): Image carousel with synchronized text animations built with JavaScript, jQuery, Slick Carousel and GSAP.
+- [Self-Hosted File Server](https://kuldeep-jadeja.vercel.app/readme/clipper-file-server): Node.js and Express file server with a Flmngr web interface for managing files.
+- [Python Background Remover](https://kuldeep-jadeja.vercel.app/readme/Image-Background-Remover): FastAPI service using Rembg and ONNX Runtime to remove image backgrounds.
+- [Portfolio Website](https://kuldeep-jadeja.vercel.app/readme/portfolio_website): Source and notes for this Next.js portfolio site.
 - Automated Twitch Clipper: Detects viral Twitch moments, generates clips and posts them as Shorts to Instagram and YouTube (Next.js, Node.js, MongoDB, Redis, BullMQ, FFmpeg). Private for now.
 
 ## Profiles

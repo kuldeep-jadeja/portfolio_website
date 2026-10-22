@@ -58,7 +58,8 @@ export default function Dock({
             const left =
                 active.offsetLeft + active.offsetWidth / 2 - limelight.offsetWidth / 2;
 
-            limelight.style.left = `${left}px`;
+            // transform, not `left`: composite-only, so it never re-lays out the dock
+            limelight.style.transform = `translateX(${left}px)`;
 
             if (!ready) {
                 const timer = setTimeout(() => setReady(true), 50);

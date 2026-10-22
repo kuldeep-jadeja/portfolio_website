@@ -20,27 +20,15 @@
     border-radius: 24px;
     background: var(--surface);
     overflow: hidden;
-    transition: border-color 0.4s ease;
+    transition: border-color var(--dur-hover) ease;
 
-    &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-            420px circle at var(--mx) var(--my),
-            color-mix(in srgb, var(--accent) 13%, transparent),
-            transparent 60%
-        );
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        pointer-events: none;
-    }
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
 
-    &:hover {
-        border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
-
-        &::before {
-            opacity: 1;
+            .spotlight {
+                opacity: 1;
+            }
         }
     }
 
@@ -97,19 +85,39 @@
     color: var(--text);
     cursor: default;
     transition:
-        background-color 0.25s ease,
-        color 0.25s ease,
-        border-color 0.25s ease,
-        translate 0.3s var(--ease-out),
-        rotate 0.3s var(--ease-out);
+        background-color var(--dur-hover) ease,
+        color var(--dur-hover) ease,
+        border-color var(--dur-hover) ease,
+        translate var(--dur-hover) var(--ease-out),
+        rotate var(--dur-hover) var(--ease-out);
 
-    &:hover {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: var(--accent-ink);
-        translate: 0 -3px;
-        rotate: -2deg;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--accent-ink);
+            translate: 0 -3px;
+            rotate: -2deg;
+        }
     }
+}
+
+/* 840px glow centred on its own origin, moved by transform from Skills.js */
+.spotlight {
+    position: absolute;
+    top: -420px;
+    left: -420px;
+    width: 840px;
+    height: 840px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle closest-side,
+        color-mix(in srgb, var(--accent) 13%, transparent),
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 @media (max-width: 900px) {

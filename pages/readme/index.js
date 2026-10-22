@@ -2,24 +2,25 @@ import { Notebook } from 'lucide-react';
 import styles from '../../styles/readme.module.scss';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
-import { graph, breadcrumbSchema } from '@/lib/seo';
+import { SITE_URL, PERSON_ID, WEBSITE_ID, graph, breadcrumbSchema } from '@/lib/seo';
 
 export default function Readme() {
     return (
         <>
             <Seo
                 title="Project READMEs – Kuldeepsinh Jadeja"
-                description="Setup guides and docs for open-source projects by Kuldeepsinh Jadeja: a GSAP image slider, a Node.js file server, a Twitch clipper and a FastAPI background remover."
+                description="Setup guides for open-source projects by Kuldeepsinh Jadeja: a GSAP image slider, a Node.js file server and a FastAPI background remover."
+                socialDescription="Setup guides for open-source projects by Kuldeepsinh Jadeja: GSAP slider, Node.js file server, FastAPI bg remover."
                 path="/readme"
                 image="/og/readme.jpg"
                 jsonLd={graph(
                     {
                         "@type": "CollectionPage",
-                        "@id": "https://kuldeepjadeja.dev/readme#page",
-                        url: "https://kuldeepjadeja.dev/readme",
+                        "@id": `${SITE_URL}/readme#page`,
+                        url: `${SITE_URL}/readme`,
                         name: "Project READMEs",
-                        isPartOf: { "@id": "https://kuldeepjadeja.dev/#website" },
-                        about: { "@id": "https://kuldeepjadeja.dev/#person" },
+                        isPartOf: { "@id": WEBSITE_ID },
+                        about: { "@id": PERSON_ID },
                     },
                     breadcrumbSchema([
                         { name: "Home", path: "/" },

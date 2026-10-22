@@ -65,18 +65,25 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-align: center;
-    transition: transform 0.4s var(--ease-out);
+    transition: transform var(--dur-hover) var(--ease-out);
 
     svg {
-        transition: transform 0.4s var(--ease-out);
+        transition: transform var(--dur-hover) var(--ease-out);
     }
 
-    &:hover {
-        transform: scale(1.06);
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            transform: scale(1.06);
 
-        svg {
-            transform: rotate(45deg);
+            svg {
+                transform: rotate(45deg);
+            }
         }
+    }
+
+    &:active {
+        transform: scale(0.97);
+        transition-duration: var(--dur-press);
     }
 }
 
@@ -120,12 +127,14 @@
         background: var(--accent);
         transform: scaleX(0);
         transform-origin: right;
-        transition: transform 0.5s var(--ease-out);
+        transition: transform 0.35s var(--ease-out);
     }
 
-    &:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
     }
 }
 
@@ -151,17 +160,25 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     cursor: pointer;
-    transition: border-color 0.3s ease;
+    transition:
+        border-color var(--dur-hover) ease,
+        transform var(--dur-press) var(--ease-out);
 
     svg {
-        transition: transform 0.3s var(--ease-out);
+        transition: transform var(--dur-hover) var(--ease-out);
     }
 
-    &:hover {
-        border-color: var(--text);
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            border-color: var(--text);
 
-        svg {
-            transform: translateY(-3px);
+            svg {
+                transform: translateY(-3px);
+            }
         }
+    }
+
+    &:active {
+        transform: scale(0.97);
     }
 }

@@ -51,6 +51,7 @@ export default function Home() {
       <Seo
         title="Kuldeepsinh Jadeja – Full-Stack Engineer (React, Next.js)"
         description={DESCRIPTION}
+        socialDescription="Full-Stack Engineer at Meetanshi Technologies building fast e-commerce and AI web apps with React, Next.js and Node.js."
         path="/"
         type="profile"
         imageAlt="Kuldeepsinh Jadeja, Full-Stack Engineer at Meetanshi Technologies"

@@ -23,8 +23,11 @@ const aiCrawlers = [
     'CCBot',
 ];
 
+// Same resolution as SITE_URL in lib/seo.js
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://kuldeep-jadeja.vercel.app').replace(/\/$/, '');
+
 module.exports = {
-    siteUrl: 'https://kuldeepjadeja.dev',
+    siteUrl,
     generateRobotsTxt: true,
     // Medium article pages are canonicalised to medium.com, so they stay out of the sitemap.
     exclude: ['/api/*', '/medium/*'],

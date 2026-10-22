@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import styles from '../../styles/MediumPageList.module.scss';
 import Seo from '@/components/Seo';
-import { graph, breadcrumbSchema } from '@/lib/seo';
+import { SITE_URL, PERSON_ID, WEBSITE_ID, graph, breadcrumbSchema } from '@/lib/seo';
 
 export function extractThumbnail(html) {
     if (!html) return null;
@@ -34,16 +34,17 @@ export default function MediumPageList({ articles }) {
             <Seo
                 title="Articles on React, Next.js & Web Dev – Kuldeepsinh Jadeja"
                 description="Articles by Kuldeepsinh Jadeja on React, Next.js, Node.js, web performance and building real products, originally published on Medium."
+                socialDescription="Articles by Kuldeepsinh Jadeja on React, Next.js, Node.js and web performance."
                 path="/medium"
                 image="/og/medium.jpg"
                 jsonLd={graph(
                     {
                         "@type": "CollectionPage",
-                        "@id": "https://kuldeepjadeja.dev/medium#page",
-                        url: "https://kuldeepjadeja.dev/medium",
+                        "@id": `${SITE_URL}/medium#page`,
+                        url: `${SITE_URL}/medium`,
                         name: "Articles by Kuldeepsinh Jadeja",
-                        isPartOf: { "@id": "https://kuldeepjadeja.dev/#website" },
-                        author: { "@id": "https://kuldeepjadeja.dev/#person" },
+                        isPartOf: { "@id": WEBSITE_ID },
+                        author: { "@id": PERSON_ID },
                     },
                     breadcrumbSchema([
                         { name: "Home", path: "/" },

@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
+import { runThemeTransition } from '@/lib/themeTransition';
 
 const ThemeContext = createContext();
 
@@ -23,12 +25,24 @@ export const ThemeProvider = ({ children }) => {
         document.documentElement.setAttribute('data-theme', initialTheme);
     }, []);
 
-    const toggleTheme = () => {
+    // `origin` is the element the circular reveal grows from (see lib/themeTransition.js).
+    const toggleTheme = useCallback(({ origin } = {}) => {
         const newTheme = theme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-    };
+        try {
+            localStorage.setItem('theme', newTheme);
+        } catch (e) {
+            // A theme that cannot be persisted still applies for this session.
+        }
+        // The view transition snapshots the page as soon as this returns, so the
+        // attribute and the React render (toggle icon) must both be committed.
+        runThemeTransition(
+            () => {
+                document.documentElement.setAttribute('data-theme', newTheme);
+                flushSync(() => setTheme(newTheme));
+            },
+            { origin }
+        );
+    }, [theme]);
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>

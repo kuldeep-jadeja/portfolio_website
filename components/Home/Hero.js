@@ -38,14 +38,15 @@ export default function Hero() {
 
                 if (firstVisit) {
                     const count = { value: 0 };
+                    // Kept short: the counter is artificial latency in front of real content
                     tl.to(count, {
                         value: 100,
-                        duration: 1,
+                        duration: 0.7,
                         ease: "power2.inOut",
                         onUpdate: () => {
                             counter.textContent = String(Math.round(count.value)).padStart(3, "0");
                         },
-                    }).to(curtain, { yPercent: -100, duration: 1, ease: "expo.inOut" }, "+=0.1");
+                    }).to(curtain, { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, "+=0.05");
                 } else {
                     gsap.set(curtain, { display: "none" });
                 }
@@ -54,7 +55,8 @@ export default function Hero() {
                     .from(split.chars, { yPercent: 115, rotate: 8, duration: 1.3, stagger: 0.035 }, "<")
                     .from(
                         q(`.${styles.portrait}`),
-                        { scale: 0, rotate: -120, duration: 1.4, ease: "back.out(1.4)" },
+                        // Never from scale(0): nothing real appears from nothing
+                        { scale: 0.6, autoAlpha: 0, rotate: -60, duration: 1.2, ease: "back.out(1.4)" },
                         "<0.35"
                     )
                     .from(

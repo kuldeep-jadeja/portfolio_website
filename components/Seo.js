@@ -6,6 +6,8 @@ import { SITE_NAME, TWITTER_HANDLE, DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/
 export default function Seo({
     title,
     description,
+    // Social cards truncate around 125 characters; defaults to `description`
+    socialDescription,
     path = "/",
     canonical,
     image = DEFAULT_OG_IMAGE,
@@ -19,6 +21,7 @@ export default function Seo({
     const canonicalUrl = canonical ? absoluteUrl(canonical) : url;
     const imageUrl = absoluteUrl(image);
     const alt = imageAlt || title;
+    const shareText = socialDescription || description;
 
     return (
         <Head>
@@ -35,7 +38,7 @@ export default function Seo({
             <meta property="og:site_name" content={SITE_NAME} />
             <meta property="og:locale" content="en_US" />
             <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
+            <meta property="og:description" content={shareText} />
             <meta property="og:url" content={url} />
             <meta property="og:image" content={imageUrl} />
             <meta property="og:image:alt" content={alt} />
@@ -55,7 +58,7 @@ export default function Seo({
             <meta name="twitter:site" content={TWITTER_HANDLE} />
             <meta name="twitter:creator" content={TWITTER_HANDLE} />
             <meta name="twitter:title" content={title} />
-            <meta name="twitter:description" content={description} />
+            <meta name="twitter:description" content={shareText} />
             <meta name="twitter:image" content={imageUrl} />
             <meta name="twitter:image:alt" content={alt} />
 

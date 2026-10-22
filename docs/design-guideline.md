@@ -59,16 +59,29 @@ so the Readme, Medium and Contact pages keep working.
 
 | Interaction             | Duration      | Easing             |
 | ----------------------- | ------------- | ------------------ |
-| Hover / micro           | 200–300ms     | `power3.out`       |
+| Press (`:active`)       | 120ms (`--dur-press`) | `--ease-out`, `scale(0.97)` |
+| Hover / micro           | 250ms (`--dur-hover`) | `--ease-out` (transform), `ease` (color) |
+| On-screen movement      | 350ms         | `--ease-in-out` (dock indicator) |
 | Reveal on enter         | 0.9–1.2s      | `expo.out`         |
 | Stagger                 | 0.03–0.08s    | —                  |
 | Scroll-linked           | scrubbed      | `none`             |
-| Magnetic release        | 0.8s          | `elastic.out(1, .4)` |
+| Magnetic release        | 0.9s          | `elastic.out(1, .4)` |
 
-- Only `transform`, `opacity` and `clip-path` are animated.
+- Only `transform`, `opacity` and `clip-path` are animated. Never `left`/`top`/`width`.
+- Never enter from `scale(0)`; start at `scale(0.6–0.97)` with `opacity: 0`.
+- Bounce/overshoot only where the pointer "threw" something (magnetic release).
+- Pressables respond on press (`:active`), not only on hover.
+- Hover motion lives inside `@media (hover: hover) and (pointer: fine)` so taps on
+  touch screens don't leave elements stuck in their hover state.
+- Pointer-follow effects write `transform` on the moving element, never a CSS
+  variable on a parent (that restyles every child per frame).
+- GSAP tweens that can be re-triggered mid-flight use `overwrite: "auto"` so they
+  start from the live value instead of fighting each other.
+- No perpetual pulses in persistent chrome (dock); loops are reserved for the hero.
 - Smooth scroll: Lenis driven by the GSAP ticker so ScrollTrigger stays in sync.
-- `prefers-reduced-motion: reduce` disables smooth scroll, cursor, marquee, and every
-  reveal; content renders in its final state.
+- `prefers-reduced-motion: reduce` disables smooth scroll, cursor, marquee, every
+  reveal and all loops. Colour/opacity transitions stay so state changes still read.
+- `prefers-reduced-transparency: reduce` makes the dock and theme toggle solid.
 - Custom cursor only on `(pointer: fine)` devices.
 
 ## Accessibility

@@ -5,11 +5,13 @@ import SectionHeading from "./SectionHeading";
 import sectionStyles from "./Section.module.scss";
 import styles from "./Skills.module.scss";
 
-// Spotlight that follows the pointer inside each card
+// Spotlight that follows the pointer inside each card. Writes `transform` on the
+// spotlight itself: a CSS variable on the card would restyle every pill per move.
 function trackPointer(e) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
+    const card = e.currentTarget;
+    const spot = card.firstElementChild;
+    const rect = card.getBoundingClientRect();
+    spot.style.transform = `translate(${e.clientX - rect.left}px, ${e.clientY - rect.top}px)`;
 }
 
 export default function Skills() {
@@ -49,6 +51,7 @@ export default function Skills() {
             <div className={styles.grid}>
                 {skillGroups.map((group) => (
                     <article key={group.title} className={styles.card} onPointerMove={trackPointer}>
+                        <span className={styles.spotlight} aria-hidden="true" />
                         <div className={styles.cardHead}>
                             <h3 className={styles.cardTitle}>{group.title}</h3>
                             <span className={styles.cardIndex}>

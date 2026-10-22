@@ -12,6 +12,10 @@
     --gutter: clamp(16px, 4vw, 48px);
     --container: min(1320px, 100% - 2 * var(--gutter));
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Strong ease-in-out for things moving across the screen (e.g. dock indicator) */
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --dur-press: 120ms;
+    --dur-hover: 250ms;
 
     /* Legacy tokens used by Readme, Medium and Contact pages */
     --background: var(--bg);
@@ -194,13 +198,43 @@ html.js-motion [data-hero-reveal] {
     }
 }
 
+/* Theme transition (lib/themeTransition.js): the root view transition does
+   not cross-fade; the new theme is revealed by a clip-path circle animated
+   from JS. Duration and starting clip are scoped to theme switches so other
+   root view transitions keep their defaults. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+html[data-theme-vt="active"]::view-transition-group(root) {
+    animation-duration: var(--theme-vt-duration);
+}
+
+html[data-theme-vt="active"]::view-transition-new(root) {
+    clip-path: var(--theme-vt-clip-from);
+}
+
+/* The circle reveals the finished theme: the body's 0.5s colour fade (kept as
+   the fallback when view transitions are unavailable) would otherwise still be
+   running inside it. */
+html[data-theme-vt="active"],
+html[data-theme-vt="active"] *,
+html[data-theme-vt="active"] *::before,
+html[data-theme-vt="active"] *::after {
+    transition: none !important;
+}
+
+/* Reduced motion = gentler, not zero: loops stop and movement snaps, but
+   colour/opacity fades that explain state changes are kept. */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        transition-property: color, background-color, border-color, opacity, fill, stroke !important;
         scroll-behavior: auto !important;
     }
 }

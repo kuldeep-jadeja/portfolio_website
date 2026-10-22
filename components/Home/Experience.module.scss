@@ -53,8 +53,8 @@
     overflow: hidden;
     /* Hover uses `translate` so it never fights GSAP's `transform` */
     transition:
-        border-color 0.4s ease,
-        translate 0.5s var(--ease-out);
+        border-color var(--dur-hover) ease,
+        translate 0.3s var(--ease-out);
 
     /* Accent sweep on hover */
     &::before {
@@ -68,16 +68,18 @@
             transparent 70%
         );
         transform: translateX(-100%);
-        transition: transform 0.9s var(--ease-out);
+        transition: transform 0.7s var(--ease-out);
         pointer-events: none;
     }
 
-    &:hover {
-        border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
-        translate: 6px 0;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+            translate: 6px 0;
 
-        &::before {
-            transform: translateX(100%);
+            &::before {
+                transform: translateX(100%);
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 import Seo from '@/components/Seo';
-import { graph, breadcrumbSchema } from '@/lib/seo';
+import { SITE_URL, PERSON_ID, WEBSITE_ID, graph, breadcrumbSchema } from '@/lib/seo';
 import styles from '../styles/Contact.module.scss';
 import { useFormik } from 'formik';
 import { useRef, useState } from 'react';
@@ -198,16 +198,17 @@ export default function Contact() {
             <Seo
                 title="Contact Kuldeepsinh Jadeja – Hire a Full-Stack Engineer"
                 description="Contact Kuldeepsinh Jadeja, a Full-Stack Engineer in Ahmedabad, India, about React, Next.js and Node.js roles, freelance projects or collaborations."
+                socialDescription="Contact Kuldeepsinh Jadeja about React, Next.js and Node.js roles, freelance projects or collaborations."
                 path="/contact"
                 image="/og/contact.jpg"
                 jsonLd={graph(
                     {
                         "@type": "ContactPage",
-                        "@id": "https://kuldeepjadeja.dev/contact#page",
-                        url: "https://kuldeepjadeja.dev/contact",
+                        "@id": `${SITE_URL}/contact#page`,
+                        url: `${SITE_URL}/contact`,
                         name: "Contact Kuldeepsinh Jadeja",
-                        isPartOf: { "@id": "https://kuldeepjadeja.dev/#website" },
-                        about: { "@id": "https://kuldeepjadeja.dev/#person" },
+                        isPartOf: { "@id": WEBSITE_ID },
+                        about: { "@id": PERSON_ID },
                     },
                     breadcrumbSchema([
                         { name: "Home", path: "/" },

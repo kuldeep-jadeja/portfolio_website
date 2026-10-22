@@ -31,11 +31,13 @@ export default function Outro() {
                     },
                 });
 
+                // Starts at 0.85 (never scale(0)); no elastic — nothing threw it, so no overshoot
                 gsap.from(`.${styles.ctaWrap}`, {
-                    scale: 0,
-                    rotate: -90,
-                    duration: 1.4,
-                    ease: "elastic.out(1, 0.6)",
+                    scale: 0.85,
+                    autoAlpha: 0,
+                    rotate: -45,
+                    duration: 1.1,
+                    ease: "expo.out",
                     scrollTrigger: { trigger: `.${styles.ctaWrap}`, start: "top 90%", toggleActions: "play none none none" },
                 });
 
