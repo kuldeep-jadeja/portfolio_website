@@ -16,6 +16,7 @@ export default function Document() {
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0b" />
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f3ee" />
+        <meta name="google-site-verification" content="20cuaimC-QZYmZu8_u6c5FPkdBP5hxxW_zpy3TScTFA" />
       </Head>
       <body>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />

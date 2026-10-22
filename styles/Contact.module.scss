@@ -471,7 +471,7 @@
                         box-shadow 0.2s ease;
 
                     &:hover {
-                        background-color: darken(rgb(88, 238, 95), 10%);
+                        background-color: #2ae933; /* darken(rgb(88, 238, 95), 10%) */
                         transform: translateY(-1px);
                         box-shadow: 0 16px 34px rgba(61, 177, 66, 0.45);
                     }
