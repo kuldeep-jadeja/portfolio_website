@@ -13,6 +13,25 @@ const defaultItems = [
     {id:'contact', icon: <MessageCircleHeart />, label: 'Contact', href: "/contact" }
 ];
 
+function indexForPath(items, pathname, fallback) {
+    const currentIndex = items.findIndex(item => {
+        if (!item.href || item.href === '#') return false;
+
+        // For external links, exact match only
+        if (item.target === "_blank") {
+            return item.href === pathname;
+        }
+
+        // For internal links, check if current path starts with item href
+        // This handles both exact matches and nested routes
+        return pathname === item.href || pathname.startsWith(item.href + '/');
+    });
+
+    if (currentIndex !== -1) return currentIndex;
+    // Default to last item if no match
+    return pathname ? items.length - 1 : fallback;
+}
+
 export default function Dock({
     items = defaultItems,
     defaultActiveIndex = 0,
@@ -20,7 +39,8 @@ export default function Dock({
     iconClassName
 }) {
     const router = useRouter();
-    const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
+    // Seeded from the route so the server-rendered HTML already marks the right tab
+    const [activeIndex, setActiveIndex] = useState(() => indexForPath(items, router.pathname, defaultActiveIndex));
     const [ready, setReady] = useState(false);
 
     const itemRefs = useRef([]);
@@ -28,25 +48,8 @@ export default function Dock({
 
     // Sync activeIndex with current route
     useEffect(() => {
-        const currentIndex = items.findIndex(item => {
-            if (!item.href || item.href === '#') return false;
-
-            // For external links, exact match only
-            if (item.target === "_blank") {
-                return item.href === router.pathname;
-            }
-
-            // For internal links, check if current path starts with item href
-            // This handles both exact matches and nested routes
-            return router.pathname === item.href || router.pathname.startsWith(item.href + '/');
-        });
-
-        if (currentIndex !== -1) {
-            setActiveIndex(currentIndex);
-        } else {
-            setActiveIndex(defaultItems.length - 1); // Default to last item if no match
-        }
-    }, [router.pathname, items]);
+        setActiveIndex(indexForPath(items, router.pathname, defaultActiveIndex));
+    }, [router.pathname, items, defaultActiveIndex]);
 
     useLayoutEffect(() => {
         if (!items.length) return;

@@ -127,10 +127,8 @@ function deriveDeleteUrl(uploadUrl) {
 function getFileServerConfig() {
     const uploadUrl = deriveUploadUrl();
     const deleteUrl = deriveDeleteUrl(uploadUrl);
-    const uploadToken =
-        process.env.CLIPPER_UPLOAD_TOKEN ||
-        process.env.FILE_SERVER_UPLOAD_TOKEN ||
-        'clipper-upload-token-2024';
+    // No fallback: this repo is public, so a default token would be a published credential.
+    const uploadToken = process.env.CLIPPER_UPLOAD_TOKEN || process.env.FILE_SERVER_UPLOAD_TOKEN;
 
     if (!uploadUrl || !deleteUrl || !uploadToken) {
         const error = new Error('File server upload is not configured.');

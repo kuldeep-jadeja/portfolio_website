@@ -1,12 +1,15 @@
+import { useRef, useState } from 'react';
+import { useFormik } from 'formik';
+import { ArrowUpRight, Check, Paperclip, X } from 'lucide-react';
 import Seo from '@/components/Seo';
 import { SITE_URL, PERSON_ID, WEBSITE_ID, graph, breadcrumbSchema } from '@/lib/seo';
+import { gsap, SplitText, useGSAP, MOTION_OK } from '@/lib/gsap';
+import { profile, socials } from '@/lib/portfolioData';
 import styles from '../styles/Contact.module.scss';
-import { useFormik } from 'formik';
-import { useRef, useState } from 'react';
-import { ImageUp, X } from 'lucide-react';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const MAX_ATTACHMENTS = 5;
+const MIN_MESSAGE_LENGTH = 15;
 const ALLOWED_FILE_TYPES = [
     'image/png',
     'image/jpeg',
@@ -16,6 +19,7 @@ const ALLOWED_FILE_TYPES = [
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ];
+const SOURCES = ['LinkedIn', 'GitHub', 'Google', 'Other'];
 
 function formatFileSize(bytes) {
     if (!bytes) {
@@ -48,45 +52,87 @@ function validate(values) {
     const errors = {};
 
     if (!values.name.trim()) {
-        errors.name = 'Name is required.';
+        errors.name = 'Please enter your name.';
     }
 
     if (!values.email.trim()) {
-        errors.email = 'Email is required.';
+        errors.email = 'Please enter your email.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-        errors.email = 'Please enter a valid email address.';
+        errors.email = 'That email address doesn\'t look right.';
     }
 
     if (!values.message.trim()) {
-        errors.message = 'Message is required.';
-    } else if (values.message.trim().length < 15) {
-        errors.message = 'Message must be at least 15 characters.';
+        errors.message = 'Please write a short message.';
+    } else if (values.message.trim().length < MIN_MESSAGE_LENGTH) {
+        errors.message = `A few more words, please (at least ${MIN_MESSAGE_LENGTH} characters).`;
     }
 
     if (!values.contactReason) {
-        errors.contactReason = 'Please choose one option.';
+        errors.contactReason = 'Please pick one.';
     }
 
     if (values.attachments.length > MAX_ATTACHMENTS) {
-        errors.attachments = `You can upload up to ${MAX_ATTACHMENTS} files.`;
+        errors.attachments = `You can attach up to ${MAX_ATTACHMENTS} files.`;
     }
 
     const oversizedFile = values.attachments.find((file) => file.size > MAX_FILE_SIZE);
     if (oversizedFile) {
-        errors.attachments = `${oversizedFile.name} is larger than 10MB.`;
+        errors.attachments = `${oversizedFile.name} is larger than 10 MB.`;
     }
 
     const unsupportedFile = values.attachments.find((file) => !ALLOWED_FILE_TYPES.includes(file.type));
     if (unsupportedFile) {
-        errors.attachments = `${unsupportedFile.name} is not a supported file type.`;
+        errors.attachments = `${unsupportedFile.name} isn't a supported file type.`;
     }
 
     return errors;
 }
 
+// Label above, error below, both wired to the control for screen readers.
+function Field({ id, label, hint, error, children }) {
+    return (
+        <div className={styles.field}>
+            <label htmlFor={id} className={styles.label}>
+                {label}
+                {hint ? <span className={styles.labelHint}>{hint}</span> : null}
+            </label>
+            {children}
+            {error ? (
+                <p id={`${id}-error`} className={styles.fieldError}>
+                    {error}
+                </p>
+            ) : null}
+        </div>
+    );
+}
+
 export default function Contact() {
-    const [isDragActive, setIsDragActive] = useState(false);
+    const root = useRef(null);
     const fileInputRef = useRef(null);
+    const [isDragActive, setIsDragActive] = useState(false);
+    const [sentTo, setSentTo] = useState(null);
+
+    useGSAP(
+        () => {
+            const mm = gsap.matchMedia();
+            mm.add(MOTION_OK, () => {
+                const split = SplitText.create(root.current.querySelector(`.${styles.title}`), {
+                    type: 'lines',
+                    mask: 'lines',
+                });
+                gsap.timeline({ defaults: { ease: 'expo.out' } })
+                    .from(split.lines, { yPercent: 110, duration: 1.1, stagger: 0.08 })
+                    .from(
+                        root.current.querySelectorAll('[data-reveal]'),
+                        { y: 24, autoAlpha: 0, duration: 0.9, stagger: 0.07 },
+                        '<0.2'
+                    );
+                return () => split.revert();
+            });
+            return () => mm.revert();
+        },
+        { scope: root }
+    );
 
     const formik = useFormik({
         initialValues: {
@@ -129,23 +175,20 @@ export default function Contact() {
 
                     setStatus({
                         type: 'error',
-                        message: data.message || 'Something went wrong while submitting the form.',
+                        message: data.message || 'Something went wrong while sending your message.',
                     });
                     return;
                 }
 
+                setSentTo({ name: values.name.trim().split(/\s+/)[0], email: values.email.trim() });
                 resetForm();
                 if (fileInputRef.current) {
                     fileInputRef.current.value = '';
                 }
-                setStatus({
-                    type: 'success',
-                    message: data.message || 'Thanks! Your message has been submitted.',
-                });
             } catch (error) {
                 setStatus({
                     type: 'error',
-                    message: 'Could not submit the form. Please try again in a moment.',
+                    message: 'Could not send your message. Check your connection and try again.',
                 });
             } finally {
                 setSubmitting(false);
@@ -166,32 +209,28 @@ export default function Contact() {
         setFieldTouched,
     } = formik;
 
-    const handleAttachmentChange = (incomingFiles) => {
-        const filesToAdd = incomingFiles.filter(Boolean);
-        const mergedFiles = mergeUniqueFiles(values.attachments, filesToAdd);
+    const errorFor = (name) => (touched[name] && errors[name] ? errors[name] : null);
+    const describedBy = (name) => (errorFor(name) ? `${name}-error` : undefined);
 
+    const handleAttachmentChange = (incomingFiles) => {
+        const mergedFiles = mergeUniqueFiles(values.attachments, incomingFiles.filter(Boolean));
         setFieldValue('attachments', mergedFiles);
         setFieldTouched('attachments', true, false);
-
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
         }
     };
 
     const handleAttachmentRemove = (indexToRemove) => {
-        const nextFiles = values.attachments.filter((_, index) => index !== indexToRemove);
-
-        setFieldValue('attachments', nextFiles);
+        setFieldValue(
+            'attachments',
+            values.attachments.filter((_, index) => index !== indexToRemove)
+        );
         setFieldTouched('attachments', true, false);
-
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
     };
 
-    const triggerFilePicker = () => {
-        fileInputRef.current?.click();
-    };
+    const messageLength = values.message.trim().length;
+    const links = socials.filter((s) => s.label !== 'Resume');
 
     return (
         <>
@@ -216,218 +255,232 @@ export default function Contact() {
                     ])
                 )}
             />
-            <section className={styles.contactWrapper}>
-                <video autoPlay loop muted className={styles.backgroundVideo}>
-                    <source src="/images/background_video.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
 
-                <div className={styles.contactFormWrapper}>
-                    <div className={styles.content}>
-                        <h1 className={styles.title}>Love To Hear from You 👋🏻</h1>
-                        <h2 className={styles.subtitle}>Let's Discuss and Hustle Something Fascinating!</h2>
-                    </div>
-                    <div className={styles.rightWrapper}>
-                        <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
-                            <div className={styles.inputGrp}>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    placeholder='Name'
-                                    className={`${styles.input} ${touched.name && errors.name ? styles.inputError : ''}`}
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    aria-invalid={touched.name && errors.name ? 'true' : 'false'}
-                                />
-                                {touched.name && errors.name ? <span className={styles.errorText}>{errors.name}</span> : null}
+            <section ref={root} className={styles.page}>
+                <header className={styles.header}>
+                    <h1 className={styles.title}>Tell me what you&apos;re building.</h1>
+                    <p className={styles.lede} data-reveal>
+                        Full-time roles, freelance projects or a question about React, Next.js or Node.js.
+                        Send a note and I&apos;ll get back to you by email.
+                    </p>
+                </header>
+
+                <div className={styles.layout}>
+                    <aside className={styles.aside}>
+                        <div className={styles.availability} data-reveal>
+                            <span className={styles.statusDot} aria-hidden="true" />
+                            <p>{profile.availability}</p>
+                        </div>
+
+                        <dl className={styles.facts} data-reveal>
+                            <div>
+                                <dt>Currently</dt>
+                                <dd>
+                                    {profile.role} at {profile.currentCompany}
+                                </dd>
                             </div>
-                            <div className={styles.inputGrp}>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder='Email'
-                                    className={`${styles.input} ${touched.email && errors.email ? styles.inputError : ''}`}
-                                    value={values.email}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    aria-invalid={touched.email && errors.email ? 'true' : 'false'}
-                                />
-                                {touched.email && errors.email ? <span className={styles.errorText}>{errors.email}</span> : null}
+                            <div>
+                                <dt>Based in</dt>
+                                <dd>{profile.location}</dd>
                             </div>
-                            <div className={styles.inputGrp}>
-                                <textarea
-                                    name="message"
-                                    placeholder='Message'
-                                    className={`${styles.textarea} ${touched.message && errors.message ? styles.inputError : ''}`}
-                                    value={values.message}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    aria-invalid={touched.message && errors.message ? 'true' : 'false'}
-                                    style={{ resize: 'none' }}
-                                ></textarea>
-                                {touched.message && errors.message ? <span className={styles.errorText}>{errors.message}</span> : null}
+                        </dl>
+
+                        <nav aria-label="Profiles" className={styles.profiles} data-reveal>
+                            <p className={styles.profilesTitle}>Or find me on</p>
+                            <ul>
+                                {links.map((link) => (
+                                    <li key={link.label}>
+                                        <a href={link.href} target="_blank" rel="noopener noreferrer">
+                                            {link.label}
+                                            <ArrowUpRight size={16} aria-hidden="true" />
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    </aside>
+
+                    <div className={styles.card} data-reveal>
+                        {sentTo ? (
+                            <div className={styles.success} role="status">
+                                <span className={styles.successIcon} aria-hidden="true">
+                                    <Check size={26} strokeWidth={2.2} />
+                                </span>
+                                <h2 className={styles.successTitle}>Message sent.</h2>
+                                <p className={styles.successText}>
+                                    Thanks{sentTo.name ? `, ${sentTo.name}` : ''}. I&apos;ll reply to{' '}
+                                    <strong>{sentTo.email}</strong>.
+                                </p>
+                                <button type="button" className={styles.secondaryBtn} onClick={() => setSentTo(null)}>
+                                    Send another message
+                                </button>
                             </div>
-                            <div className={`${styles.inputGrp} ${styles.radioGroup}`}>
-                                <h3 className={styles.formLabel}>
-                                    Where did you hear about me?
-                                </h3>
-                                <div className={styles.radioWrapper}>
-                                    <label className={styles.radioLabel}>
+                        ) : (
+                            <form className={styles.form} onSubmit={handleSubmit} noValidate>
+                                <div className={styles.row}>
+                                    <Field id="name" label="Name" error={errorFor('name')}>
                                         <input
-                                            type="radio"
-                                            name="contactReason"
-                                            value="LinkedIn"
-                                            className={styles.radioInput}
-                                            checked={values.contactReason === 'LinkedIn'}
+                                            id="name"
+                                            type="text"
+                                            name="name"
+                                            autoComplete="name"
+                                            className={styles.input}
+                                            value={values.name}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
+                                            aria-invalid={errorFor('name') ? 'true' : 'false'}
+                                            aria-describedby={describedBy('name')}
                                         />
-                                        <span className={styles.customRadio}></span>
-                                        <span className={styles.radioText}>LinkedIn</span>
-                                    </label>
-                                    <label className={styles.radioLabel}>
+                                    </Field>
+                                    <Field id="email" label="Email" error={errorFor('email')}>
                                         <input
-                                            type="radio"
-                                            name="contactReason"
-                                            value="GitHub"
-                                            className={styles.radioInput}
-                                            checked={values.contactReason === 'GitHub'}
+                                            id="email"
+                                            type="email"
+                                            name="email"
+                                            autoComplete="email"
+                                            inputMode="email"
+                                            className={styles.input}
+                                            value={values.email}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
+                                            aria-invalid={errorFor('email') ? 'true' : 'false'}
+                                            aria-describedby={describedBy('email')}
                                         />
-                                        <span className={styles.customRadio}></span>
-                                        <span className={styles.radioText}>GitHub</span>
-                                    </label>
-                                    <label className={styles.radioLabel}>
-                                        <input
-                                            type="radio"
-                                            name="contactReason"
-                                            value="Google"
-                                            className={styles.radioInput}
-                                            checked={values.contactReason === 'Google'}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                        />
-                                        <span className={styles.customRadio}></span>
-                                        <span className={styles.radioText}>Google</span>
-                                    </label>
-                                    <label className={styles.radioLabel}>
-                                        <input
-                                            type="radio"
-                                            name="contactReason"
-                                            value="Other"
-                                            className={styles.radioInput}
-                                            checked={values.contactReason === 'Other'}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                        />
-                                        <span className={styles.customRadio}></span>
-                                        <span className={styles.radioText}>Other</span>
-                                    </label>
+                                    </Field>
                                 </div>
-                                {touched.contactReason && errors.contactReason ? <span className={styles.errorText}>{errors.contactReason}</span> : null}
-                            </div>
-                            <div className={styles.inputGrp}>
-                                <label htmlFor="attachment">Upload Files</label>
-                                <input
-                                    ref={fileInputRef}
-                                    id="attachment"
-                                    name="attachments"
-                                    type="file"
-                                    className={styles.fileInputHidden}
-                                    accept=".png,.jpg,.jpeg,.webp,.pdf,.txt,.doc,.docx"
-                                    multiple
-                                    onChange={(event) => {
-                                        const selectedFiles = Array.from(event.currentTarget.files || []);
-                                        handleAttachmentChange(selectedFiles);
-                                    }}
-                                    onBlur={() => setFieldTouched('attachments', true, true)}
-                                />
-                                <div
-                                    className={`${styles.uploadArea} ${isDragActive ? styles.uploadAreaActive : ''} ${values.attachments.length ? styles.uploadAreaWithFiles : ''}`}
-                                    role="button"
-                                    tabIndex={0}
-                                    aria-label="Upload files"
-                                    onClick={triggerFilePicker}
-                                    onKeyDown={(event) => {
-                                        if (event.key === 'Enter' || event.key === ' ') {
-                                            event.preventDefault();
-                                            triggerFilePicker();
-                                        }
-                                    }}
-                                    onDragOver={(event) => {
-                                        event.preventDefault();
-                                        setIsDragActive(true);
-                                    }}
-                                    onDragEnter={(event) => {
-                                        event.preventDefault();
-                                        setIsDragActive(true);
-                                    }}
-                                    onDragLeave={(event) => {
-                                        event.preventDefault();
-                                        setIsDragActive(false);
-                                    }}
-                                    onDrop={(event) => {
-                                        event.preventDefault();
-                                        setIsDragActive(false);
-                                        const droppedFiles = Array.from(event.dataTransfer.files || []);
-                                        handleAttachmentChange(droppedFiles);
-                                    }}
+
+                                <Field
+                                    id="message"
+                                    label="Message"
+                                    hint={
+                                        messageLength > 0 && messageLength < MIN_MESSAGE_LENGTH
+                                            ? `${MIN_MESSAGE_LENGTH - messageLength} more characters`
+                                            : null
+                                    }
+                                    error={errorFor('message')}
                                 >
-                                    {!values.attachments.length ? (
-                                        <div className={styles.uploadIntro}>
-                                            <ImageUp size={26} strokeWidth={1.8} className={styles.uploadIcon} aria-hidden="true" />
-                                            <span className={styles.uploadPrimaryText}>
-                                                Drop your files here, or <span className={styles.uploadBrowseText}>Browse</span>
-                                            </span>
-                                            <span className={styles.uploadSecondaryText}>Up to {MAX_ATTACHMENTS} files, max 10MB each</span>
-                                        </div>
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        rows={6}
+                                        className={`${styles.input} ${styles.textarea}`}
+                                        value={values.message}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        aria-invalid={errorFor('message') ? 'true' : 'false'}
+                                        aria-describedby={describedBy('message')}
+                                        data-lenis-prevent
+                                    />
+                                </Field>
+
+                                <fieldset
+                                    className={styles.fieldset}
+                                    aria-describedby={describedBy('contactReason')}
+                                >
+                                    <legend className={styles.label}>Where did you hear about me?</legend>
+                                    <div className={styles.choices}>
+                                        {SOURCES.map((source) => (
+                                            <label key={source} className={styles.choice}>
+                                                <input
+                                                    type="radio"
+                                                    name="contactReason"
+                                                    value={source}
+                                                    checked={values.contactReason === source}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                />
+                                                <span>{source}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                    {errorFor('contactReason') ? (
+                                        <p id="contactReason-error" className={styles.fieldError}>
+                                            {errorFor('contactReason')}
+                                        </p>
                                     ) : null}
+                                </fieldset>
+
+                                <div className={styles.field}>
+                                    <span className={styles.label}>
+                                        Attachments
+                                        <span className={styles.labelHint}>Optional</span>
+                                    </span>
+                                    <input
+                                        ref={fileInputRef}
+                                        id="attachments"
+                                        name="attachments"
+                                        type="file"
+                                        className="sr-only"
+                                        accept=".png,.jpg,.jpeg,.webp,.pdf,.txt,.doc,.docx"
+                                        multiple
+                                        tabIndex={-1}
+                                        onChange={(event) => handleAttachmentChange(Array.from(event.currentTarget.files || []))}
+                                    />
+                                    <button
+                                        type="button"
+                                        className={`${styles.dropzone} ${isDragActive ? styles.dropzoneActive : ''}`}
+                                        aria-describedby={`attachments-hint${errorFor('attachments') ? ' attachments-error' : ''}`}
+                                        onClick={() => fileInputRef.current?.click()}
+                                        onDragOver={(event) => {
+                                            event.preventDefault();
+                                            setIsDragActive(true);
+                                        }}
+                                        onDragLeave={() => setIsDragActive(false)}
+                                        onDrop={(event) => {
+                                            event.preventDefault();
+                                            setIsDragActive(false);
+                                            handleAttachmentChange(Array.from(event.dataTransfer.files || []));
+                                        }}
+                                    >
+                                        <Paperclip size={18} aria-hidden="true" />
+                                        <span>
+                                            Drop files or <span className={styles.browse}>browse</span>
+                                        </span>
+                                    </button>
+                                    <p id="attachments-hint" className={styles.hint}>
+                                        Up to {MAX_ATTACHMENTS} files, 10 MB each. PNG, JPG, WEBP, PDF, TXT, DOC, DOCX.
+                                    </p>
 
                                     {values.attachments.length ? (
-                                        <div className={styles.selectedFilesList} data-lenis-prevent="true">
+                                        <ul className={styles.files} data-lenis-prevent>
                                             {values.attachments.map((file, index) => (
-                                                <div className={styles.uploadSelectedRow} key={`${file.name}-${file.size}-${file.lastModified}-${index}`}>
-                                                    <div className={styles.uploadSelectedInfo}>
-                                                        <span className={styles.uploadSelectedName}>{file.name}</span>
-                                                        <span className={styles.uploadSelectedSize}>{formatFileSize(file.size)}</span>
-                                                    </div>
+                                                <li key={`${file.name}-${file.size}-${file.lastModified}`} className={styles.file}>
+                                                    <span className={styles.fileName}>{file.name}</span>
+                                                    <span className={styles.fileSize}>{formatFileSize(file.size)}</span>
                                                     <button
                                                         type="button"
-                                                        className={styles.removeFileBtn}
+                                                        className={styles.fileRemove}
                                                         aria-label={`Remove ${file.name}`}
-                                                        onClick={(event) => {
-                                                            event.preventDefault();
-                                                            event.stopPropagation();
-                                                            handleAttachmentRemove(index);
-                                                        }}
+                                                        onClick={() => handleAttachmentRemove(index)}
                                                     >
-                                                        <X size={16} strokeWidth={2} aria-hidden="true" />
+                                                        <X size={16} aria-hidden="true" />
                                                     </button>
-                                                </div>
+                                                </li>
                                             ))}
-                                        </div>
+                                        </ul>
+                                    ) : null}
+
+                                    {errorFor('attachments') ? (
+                                        <p id="attachments-error" className={styles.fieldError}>
+                                            {errorFor('attachments')}
+                                        </p>
                                     ) : null}
                                 </div>
-                                <span className={styles.fileHint}>Accepted: PNG, JPG, WEBP, PDF, TXT, DOC, DOCX</span>
-                                {touched.attachments && errors.attachments ? <span className={styles.errorText}>{errors.attachments}</span> : null}
-                            </div>
 
-                            {status?.message ? (
-                                <div
-                                    className={`${styles.statusMessage} ${status.type === 'success' ? styles.statusSuccess : styles.statusError
-                                        }`}
-                                    role="status"
-                                >
-                                    {status.message}
+                                {status?.type === 'error' ? (
+                                    <p className={styles.formError} role="alert">
+                                        {status.message}
+                                    </p>
+                                ) : null}
+
+                                <div className={styles.actions}>
+                                    <button type="submit" className={styles.submit} disabled={isSubmitting}>
+                                        {isSubmitting ? 'Sending…' : 'Send message'}
+                                        <ArrowUpRight size={18} aria-hidden="true" />
+                                    </button>
                                 </div>
-                            ) : null}
-
-                            <button type='submit' className={styles.submitBtn} disabled={isSubmitting}>
-                                {isSubmitting ? 'Submitting...' : 'Submit'}
-                            </button>
-                        </form>
+                            </form>
+                        )}
                     </div>
                 </div>
             </section>
