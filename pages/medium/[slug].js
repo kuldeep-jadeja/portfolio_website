@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styles from '../../styles/MediumPageDetails.module.scss';
-import Head from 'next/head';
+import Seo from '@/components/Seo';
+import { PERSON_ID, SITE_URL, breadcrumbSchema, graph } from '@/lib/seo';
 
 function createSlug(title) {
     return title
@@ -11,7 +12,16 @@ function createSlug(title) {
 
 function stripHtml(html) {
     if (!html) return '';
-    return html.replace(/<[^>]+>/g, '').slice(0, 160);
+    const text = html
+        .replace(/<figcaption[\s\S]*?<\/figcaption>/gi, ' ')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&amp;/g, '&')
+        .replace(/&#39;|&#x27;/g, "'")
+        .replace(/&quot;/g, '"')
+        .replace(/\s+/g, ' ')
+        .trim();
+    return text.length > 155 ? `${text.slice(0, 152).replace(/\s+\S*$/, '')}…` : text;
 }
 
 function extractThumbnail(html) {
@@ -21,84 +31,54 @@ function extractThumbnail(html) {
 }
 
 export default function MediumPageDetail({ article }) {
-    const articleSchema = {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": article.title,
-        "description": stripHtml(article.description),
-        "image": extractThumbnail(article.description) || "https://kuldeepjadeja.dev/images/medium.webp",
-        "author": {
-            "@type": "Person",
-            "name": "Kuldeep Jadeja",
-            "url": "https://kuldeepjadeja.dev"
+    const path = `/medium/${article.slug}`;
+    const description = stripHtml(article.description);
+    const image = extractThumbnail(article.description) || "/og/medium.jpg";
+    // rss2json returns "YYYY-MM-DD HH:mm:ss" in UTC
+    const parsed = new Date(`${String(article.pubDate).replace(' ', 'T')}Z`);
+    const published = Number.isNaN(parsed.getTime()) ? article.pubDate : parsed.toISOString();
+    const jsonLd = graph(
+        {
+            "@type": "BlogPosting",
+            "@id": `${SITE_URL}${path}#article`,
+            headline: article.title,
+            description,
+            image: image.startsWith('http') ? image : `${SITE_URL}${image}`,
+            author: { "@id": PERSON_ID, "@type": "Person", name: "Kuldeepsinh Jadeja", url: SITE_URL },
+            publisher: { "@id": PERSON_ID },
+            datePublished: published,
+            dateModified: published,
+            mainEntityOfPage: article.link,
+            url: article.link,
+            keywords: article.categories || [],
+            inLanguage: "en",
+            isAccessibleForFree: true,
         },
-        "publisher": {
-            "@type": "Person",
-            "name": "Kuldeepsinh Jadeja",
-            "url": "https://kuldeepjadeja.dev"
-        },
-        "datePublished": article.pubDate,
-        "dateModified": article.pubDate,
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": `https://kuldeepjadeja.dev/medium/${article.slug}`
-        },
-        "url": article.link,
-        "articleSection": article.categories || [],
-        "keywords": article.categories?.join(", ") || "",
-        "inLanguage": "en-US",
-        "isAccessibleForFree": true
-    };
+        breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Articles', path: '/medium' },
+            { name: article.title, path },
+        ])
+    );
 
     return (
         <>
-            <Head>
-                <title>{article.title} | Kuldeep Jadeja</title>
-                <link rel="canonical" href={`https://kuldeepjadeja.dev/medium/${article.slug}/`} />
-                <meta name="description"
-                    content={stripHtml(article.description)} />
-                <meta name="image" content="/images/medium.webp" />
-                <meta itemProp="name" content="Kuldeepsinh Jadeja - Software Engineer Portfolio" />
-                <meta itemProp="description"
-                    content={stripHtml(article.description)} />
-                <meta itemProp="image" content="/images/medium.webp" />
-                <meta name="twitter:card" content="summary" />
-                <meta name="twitter:title" content={article.title} />
-                <meta name="twitter:description"
-                    content={stripHtml(article.description)} />
-                <meta name="twitter:site" content="@kuldeepjadeja" />
-                <meta name="twitter:creator" content="@kuldeepjadeja" />
-                <meta name="twitter:image:src" content="/images/medium.webp" />
-                <meta name="keywords"
-                    content="Kuldeep Jadeja, Software Engineer, React Developer, Medium,  Frontend Developer, JavaScript Developer, Portfolio" />
-                <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-                <meta name="og:title" content={article.title} />
-                <meta name="og:description"
-                    content={stripHtml(article.description)} />
-                <meta name="og:image" content="/images/medium.webp" />
-                <meta name="og:url" content={`https://kuldeepjadeja.dev/medium/${article.slug}/`} />
-                <meta name="og:site_name" content="Kuldeep Jadeja Portfolio" />
-                <meta name="og:locale" content="en_US" />
-                <meta name="og:type" content="article" />
-                <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
-                <link rel="apple-touch-icon-precomposed" href="images/favicon.png" />
-                <meta name="title" property="og:title"
-                    content={article.title} />
-                <meta name="image" property="og:image" content="/images/medium.webp" />
-                <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="images/favicon.png" />
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(articleSchema),
-                    }}
-                />
-            </Head>
+            {/* Medium is the original publisher, so the canonical points there to avoid duplicate content. */}
+            <Seo
+                title={`${article.title} – Kuldeepsinh Jadeja`}
+                description={description}
+                path={path}
+                canonical={article.link}
+                image={image}
+                imageAlt={article.title}
+                type="article"
+                article={{ publishedTime: published, tags: article.categories }}
+                jsonLd={jsonLd}
+            />
             <div className={styles.container}>
                 {article ? (
                     <div className={styles.contentWrapper} id="top">
-                        <h2 className={styles.articleTitle}>{article.title}</h2>
+                        <h1 className={styles.articleTitle}>{article.title}</h1>
                         <p className={styles.authorName}><strong>Author:</strong> {article.author}</p>
                         <p className={styles.publishDate}><strong>Published:</strong> {new Date(article.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                         <div className={styles.categories}>
@@ -134,13 +114,22 @@ export default function MediumPageDetail({ article }) {
     );
 }
 
-export async function getStaticPaths() {
-    const res = await fetch(
-        'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@kuldeepjadeja7'
-    );
+const FEED_URL = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@kuldeepjadeja7';
 
-    const data = await res.json();
-    const articles = data.items || [];
+async function fetchArticles() {
+    try {
+        const res = await fetch(FEED_URL);
+        if (!res.ok) return [];
+        const data = await res.json();
+        return data.items || [];
+    } catch (err) {
+        console.error('Medium feed fetch failed:', err);
+        return [];
+    }
+}
+
+export async function getStaticPaths() {
+    const articles = await fetchArticles();
 
     const paths = articles.map((item) => ({
         params: {
@@ -155,18 +144,15 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const res = await fetch(
-        'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@kuldeepjadeja7'
-    );
+    const articles = await fetchArticles();
 
-    const data = await res.json();
-
-    const article = data.items.find((item) => {
+    const article = articles.find((item) => {
         return createSlug(item.title) === params.slug;
     });
 
     if (!article) {
-        return { notFound: true };
+        // Retry later in case the feed was temporarily unavailable
+        return { notFound: true, revalidate: 600 };
     }
 
     article.slug = params.slug;

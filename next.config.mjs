@@ -7,6 +7,16 @@ const nextConfig = {
     'remark-gfm',
     'rehype-raw',
   ],
+  async redirects() {
+    return [
+      {
+        // Old lowercase slug; GitHub repo is Image-Background-Remover
+        source: '/readme/Image-background-remover',
+        destination: '/readme/Image-Background-Remover',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

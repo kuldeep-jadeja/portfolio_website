@@ -1,54 +1,52 @@
-const fetch = require('node-fetch');
-
+// Keep in sync with REPOS in pages/readme/[slug].js
 const repos = [
     'AwardWinningSlider',
     'clipper-file-server',
     'portfolio_website',
-    'Image-background-remover',
+    'Image-Background-Remover',
 ];
 
-function createSlug(title) {
-    return title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-}
+// Crawlers for AI search and assistants. Allowed explicitly so the portfolio
+// can be cited in ChatGPT, Claude, Perplexity, Gemini and Copilot answers.
+const aiCrawlers = [
+    'GPTBot',
+    'OAI-SearchBot',
+    'ChatGPT-User',
+    'ClaudeBot',
+    'Claude-SearchBot',
+    'Claude-User',
+    'PerplexityBot',
+    'Perplexity-User',
+    'Google-Extended',
+    'Applebot-Extended',
+    'Bingbot',
+    'CCBot',
+];
 
 module.exports = {
     siteUrl: 'https://kuldeepjadeja.dev',
     generateRobotsTxt: true,
+    // Medium article pages are canonicalised to medium.com, so they stay out of the sitemap.
+    exclude: ['/api/*', '/medium/*'],
+    transform: async (config, path) => ({
+        loc: path,
+        changefreq: path === '/' ? 'weekly' : 'monthly',
+        priority: path === '/' ? 1.0 : path.split('/').length > 2 ? 0.6 : 0.8,
+        lastmod: new Date().toISOString(),
+    }),
+    robotsTxtOptions: {
+        policies: [
+            { userAgent: '*', allow: '/', disallow: ['/api/'] },
+            ...aiCrawlers.map((userAgent) => ({ userAgent, allow: '/', disallow: ['/api/'] })),
+        ],
+    },
 
     additionalPaths: async (config) => {
-        const result = [];
-
-        // README index
-        result.push(await config.transform(config, '/readme'));
-
-        // README dynamic pages
-        repos.forEach((repo) => {
-            result.push(config.transform(config, `/readme/${repo}`));
-        });
-
-        // Medium index page
-        result.push(await config.transform(config, '/medium'));
-
-        // Fetch Medium RSS articles
-        try {
-            const res = await fetch(
-                'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@kuldeepjadeja7'
-            );
-
-            const data = await res.json();
-            const articles = data.items || [];
-
-            articles.forEach((article) => {
-                const slug = createSlug(article.title);
-                result.push(config.transform(config, `/medium/${slug}`));
-            });
-        } catch (err) {
-            console.error('Medium sitemap fetch failed:', err);
-        }
-
+        const result = [
+            config.transform(config, '/readme'),
+            config.transform(config, '/medium'),
+            ...repos.map((repo) => config.transform(config, `/readme/${repo}`)),
+        ];
         return Promise.all(result);
     },
 };

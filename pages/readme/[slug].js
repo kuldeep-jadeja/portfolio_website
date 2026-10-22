@@ -4,88 +4,75 @@ import rehypeRaw from "rehype-raw";
 import styles from '../../styles/readmeDetail.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import Head from 'next/head';
+import Seo from '@/components/Seo';
+import { PERSON_ID, SITE_URL, breadcrumbSchema, graph } from '@/lib/seo';
 
-function extractDescription(markdown) {
-    if (!markdown) return '';
-    const text = markdown
-        .replace(/[#>*`]/g, '')
+const REPO_META = {
+    AwardWinningSlider: {
+        name: 'Award Winning Slider',
+        languages: ['JavaScript', 'jQuery', 'GSAP', 'CSS'],
+    },
+    'clipper-file-server': {
+        name: 'Self-Hosted File Server',
+        languages: ['JavaScript', 'Node.js', 'Express.js'],
+    },
+    portfolio_website: {
+        name: 'Portfolio Website',
+        languages: ['JavaScript', 'React', 'Next.js', 'SCSS'],
+    },
+    'Image-Background-Remover': {
+        name: 'Python Background Remover',
+        languages: ['Python', 'FastAPI'],
+    },
+};
+
+function extractDescription(markdown, fallback) {
+    if (!markdown) return fallback;
+    const paragraph = markdown
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/!\[.*?\]\(.*?\)/g, '')
         .replace(/\[(.*?)\]\(.*?\)/g, '$1')
-        .slice(0, 160);
-
-    return text;
+        .split(/\n\s*\n/)
+        .map((block) => block.replace(/[#>*`|]/g, '').replace(/\s+/g, ' ').trim())
+        .find((block) => block.length > 60);
+    if (!paragraph) return fallback;
+    return paragraph.length > 155 ? `${paragraph.slice(0, 152).replace(/\s+\S*$/, '')}…` : paragraph;
 }
 
 export default function ReadmeSlug({ markdown, slug }) {
-    const description = extractDescription(markdown);
-    const projectSchema = {
-        "@context": "https://schema.org",
-        "@type": "SoftwareSourceCode",
-        "name": slug,
-        "description": description,
-        "codeRepository": `https://github.com/kuldeep-jadeja/${slug}`,
-        "author": {
-            "@type": "Person",
-            "name": "Kuldeep Jadeja",
-            "url": "https://kuldeepjadeja.dev"
+    const meta = REPO_META[slug] || { name: slug, languages: [] };
+    const path = `/readme/${slug}`;
+    const description = extractDescription(
+        markdown,
+        `${meta.name} by Kuldeepsinh Jadeja: setup, features and usage notes from the project README.`
+    );
+    const jsonLd = graph(
+        {
+            "@type": "SoftwareSourceCode",
+            "@id": `${SITE_URL}${path}#code`,
+            name: meta.name,
+            description,
+            codeRepository: `https://github.com/kuldeep-jadeja/${slug}`,
+            url: `${SITE_URL}${path}`,
+            author: { "@id": PERSON_ID, "@type": "Person", name: "Kuldeepsinh Jadeja" },
+            programmingLanguage: meta.languages,
         },
-        "publisher": {
-            "@type": "Person",
-            "name": "Kuldeep Jadeja"
-        },
-        "programmingLanguage": [
-            "JavaScript",
-            "Node.js",
-            "React"
-        ],
-        "runtimePlatform": "Web",
-        "url": `https://kuldeepjadeja.dev/readme/${slug}`,
-    };
+        breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Readme', path: '/readme' },
+            { name: meta.name, path },
+        ])
+    );
     return (
         <>
-            <Head>
-                <title>Readme - Kuldeepsinh Jadeja Portfolio</title>
-                <link rel="canonical" href={`https://kuldeepjadeja.dev/readme/${slug}`} />
-                <meta name="description"
-                    content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
-                <meta name="image" content="/images/readme.webp" />
-                <meta itemProp="name" content="Kuldeepsinh Jadeja - Software Engineer Portfolio" />
-                <meta itemProp="description"
-                    content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
-                <meta itemProp="image" content="/images/readme.webp" />
-                <meta name="twitter:card" content="summary" />
-                <meta name="twitter:title" content="Readme - Kuldeepsinh Jadeja Portfolio" />
-                <meta name="twitter:description"
-                    content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
-                <meta name="twitter:site" content="@kuldeepjadeja" />
-                <meta name="twitter:creator" content="@kuldeepjadeja" />
-                <meta name="twitter:image:src" content="/images/readme.webp" />
-                <meta name="keywords"
-                    content="Kuldeep Jadeja, Software Engineer, React Developer, Readme,  Frontend Developer, JavaScript Developer, Portfolio" />
-                <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-                <meta name="og:title" content="Readme - Kuldeepsinh Jadeja Portfolio" />
-                <meta name="og:description"
-                    content="This is the Readme page for Kuldeepsinh Jadeja's portfolio website. It provides an overview of the portfolio and instructions for navigating and understanding the content." />
-                <meta name="og:image" content="/images/readme.webp" />
-                <meta name="og:url" content={`https://kuldeepjadeja.dev/readme/${slug}`} />
-                <meta name="og:site_name" content="Kuldeep Jadeja Portfolio" />
-                <meta name="og:locale" content="en_US" />
-                <meta name="og:type" content="article" />
-                <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
-                <link rel="apple-touch-icon-precomposed" href="/images/favicon.png" />
-                <meta name="title" property="og:title"
-                    content="Readme - Kuldeepsinh Jadeja Portfolio" />
-                <meta name="image" property="og:image" content="/images/readme.webp" />
-                <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(projectSchema),
-                    }}
-                />
-            </Head>
+            <Seo
+                title={`${meta.name} README – Kuldeepsinh Jadeja`}
+                description={description}
+                path={path}
+                image="/og/readme.jpg"
+                type="article"
+                jsonLd={jsonLd}
+            />
             <div className={styles.mainWrapper}>
                 <Link className={styles.backBtn} href="/readme" >
                     <div className={styles.arrowWrapper}>
@@ -111,7 +98,7 @@ const REPOS = [
     'AwardWinningSlider',
     'clipper-file-server',
     'portfolio_website',
-    'Image-background-remover',
+    'Image-Background-Remover',
 ];
 
 export async function getStaticPaths() {

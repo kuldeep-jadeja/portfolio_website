@@ -1,0 +1,37 @@
+# Kuldeepsinh Jadeja
+
+> Portfolio of Kuldeepsinh Jadeja (also Kuldeep Jadeja), a Full-Stack Engineer at Meetanshi Technologies in India who builds e-commerce and AI-enabled web apps with React, Next.js and Node.js.
+
+## Key Facts
+
+- Name: Kuldeepsinh Jadeja (also written Kuldeep Jadeja)
+- Role: Full-Stack Engineer at Meetanshi Technologies (https://meetanshi.com), July 2026 to present
+- Based in: Ahmedabad, Gujarat, India
+- Experience: professional web development since 2022
+- Previous roles: Full Stack Engineer at Redlio Designs (Jul 2024 to Jul 2026); Frontend Developer at Salecto India (Jun 2022 to Jun 2024, Magento 2 storefronts for European brands)
+- Education: Bachelor's degree in Computer Science, Marwadi University (2019 to 2022)
+- Core stack: React, Next.js (SSR/SSG), Node.js, Express.js, MongoDB, GraphQL, REST APIs, TypeScript, TailwindCSS
+- Specialities: JWT/RBAC authentication, Core Web Vitals and Lighthouse tuning (raised scores by 20 to 35 points on two production projects), Magento 2 theming, LLM pipelines
+- Availability: open to Full-Stack and React/Next.js roles (on-site, hybrid or remote)
+
+## Pages
+
+- [Home](https://kuldeepjadeja.dev/): Profile, work experience, skills and featured projects.
+- [Contact](https://kuldeepjadeja.dev/contact): Contact form for job offers, freelance work and collaborations.
+- [Project READMEs](https://kuldeepjadeja.dev/readme): Index of documentation for open-source projects.
+- [Articles](https://kuldeepjadeja.dev/medium): Articles on web development, originally published on Medium.
+
+## Projects
+
+- [Award Winning Slider](https://kuldeepjadeja.dev/readme/AwardWinningSlider): Image carousel with synchronized text animations built with JavaScript, jQuery, Slick Carousel and GSAP.
+- [Self-Hosted File Server](https://kuldeepjadeja.dev/readme/clipper-file-server): Node.js and Express file server with a Flmngr web interface for managing files.
+- [Python Background Remover](https://kuldeepjadeja.dev/readme/Image-Background-Remover): FastAPI service using Rembg and ONNX Runtime to remove image backgrounds.
+- [Portfolio Website](https://kuldeepjadeja.dev/readme/portfolio_website): Source and notes for this Next.js portfolio site.
+- Automated Twitch Clipper: Detects viral Twitch moments, generates clips and posts them as Shorts to Instagram and YouTube (Next.js, Node.js, MongoDB, Redis, BullMQ, FFmpeg). Private for now.
+
+## Profiles
+
+- [GitHub](https://github.com/kuldeep-jadeja)
+- [LinkedIn](https://www.linkedin.com/in/kuldeepsinh-jadeja-)
+- [Medium](https://medium.com/@kuldeepjadeja7)
+- [Resume (PDF)](https://files.kuldeepjadeja.dev/files/Resume/kuldeepsinh_Resume.pdf)

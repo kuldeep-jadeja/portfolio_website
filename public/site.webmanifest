@@ -1,0 +1,13 @@
+{
+  "name": "Kuldeepsinh Jadeja – Full-Stack Engineer",
+  "short_name": "Kuldeep Jadeja",
+  "description": "Portfolio of Kuldeepsinh Jadeja, Full-Stack Engineer building React, Next.js and Node.js products.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0b",
+  "theme_color": "#0a0a0b",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

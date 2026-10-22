@@ -1,4 +1,5 @@
-import Head from 'next/head';
+import Seo from '@/components/Seo';
+import { graph, breadcrumbSchema } from '@/lib/seo';
 import styles from '../styles/Contact.module.scss';
 import { useFormik } from 'formik';
 import { useRef, useState } from 'react';
@@ -194,43 +195,26 @@ export default function Contact() {
 
     return (
         <>
-            <Head>
-                <title>Contact - Kuldeepsinh Jadeja</title>
-                <link rel="canonical" href="https://kuldeepjadeja.dev/contact" />
-                <meta name="description"
-                    content="Get in touch with Kuldeepsinh Jadeja, a passionate software engineer specializing in innovative technology solutions." />
-                <meta name="image" content="/images/Homepage.webp" />
-                <meta itemProp="name" content="Contact - Kuldeepsinh Jadeja" />
-                <meta itemProp="description"
-                    content="Kuldeepsinh Jadeja is a passionate software engineer specializing in innovative technology solutions. With strong expertise in software development, he builds impactful digital products and continuously evolves his skills to deliver high-quality, people-focused tech solutions." />
-                <meta itemProp="image" content="/images/Homepage.webp" />
-                <meta name="twitter:card" content="summary" />
-                <meta name="twitter:title" content="Contact - Kuldeepsinh Jadeja" />
-                <meta name="twitter:description"
-                    content="Get in touch with Kuldeepsinh Jadeja, a passionate software engineer specializing in innovative technology solutions." />
-                <meta name="twitter:site" content="@kuldeepjadeja" />
-                <meta name="twitter:creator" content="@kuldeepjadeja" />
-                <meta name="twitter:image:src" content="/images/Homepage.webp" />
-                <meta name="keywords"
-                    content="Kuldeep Jadeja, Software Engineer, React Developer, Frontend Developer, JavaScript Developer, Portfolio" />
-                <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-                <meta name="og:title" content="Contact - Kuldeepsinh Jadeja" />
-                <meta name="og:description"
-                    content="Get in touch with Kuldeepsinh Jadeja, a passionate software engineer specializing in innovative technology solutions." />
-                <meta name="og:image" content="/images/Homepage.webp" />
-                <meta name="og:url" content="https://kuldeepjadeja.dev/contact" />
-                <meta name="og:site_name" content="Kuldeep Jadeja Portfolio" />
-                <meta name="og:locale" content="en_US" />
-                <meta name="og:type" content="article" />
-                <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
-                <link rel="apple-touch-icon-precomposed" href="images/favicon.png" />
-                <meta name="title" property="og:title"
-                    content="Contact - Kuldeepsinh Jadeja" />
-                <meta name="image" property="og:image" content="/images/Homepage.webp" />
-                <meta name="author" content="Kuldeep Jadeja" />
-                <link rel="icon" type="image/x-icon" href="images/favicon.png" />
-            </Head>
+            <Seo
+                title="Contact Kuldeepsinh Jadeja – Hire a Full-Stack Engineer"
+                description="Contact Kuldeepsinh Jadeja, a Full-Stack Engineer in Ahmedabad, India, about React, Next.js and Node.js roles, freelance projects or collaborations."
+                path="/contact"
+                image="/og/contact.jpg"
+                jsonLd={graph(
+                    {
+                        "@type": "ContactPage",
+                        "@id": "https://kuldeepjadeja.dev/contact#page",
+                        url: "https://kuldeepjadeja.dev/contact",
+                        name: "Contact Kuldeepsinh Jadeja",
+                        isPartOf: { "@id": "https://kuldeepjadeja.dev/#website" },
+                        about: { "@id": "https://kuldeepjadeja.dev/#person" },
+                    },
+                    breadcrumbSchema([
+                        { name: "Home", path: "/" },
+                        { name: "Contact", path: "/contact" },
+                    ])
+                )}
+            />
             <section className={styles.contactWrapper}>
                 <video autoPlay loop muted className={styles.backgroundVideo}>
                     <source src="/images/background_video.mp4" type="video/mp4" />

@@ -68,7 +68,7 @@ export default function Experience() {
                         <article className={styles.content}>
                             <div className={styles.head}>
                                 <div className={styles.company}>
-                                    <span className={styles.logo}>
+                                    <span className={`${styles.logo} ${job.logoTone === "light" ? styles.logoLight : ""}`}>
                                         {job.logo ? (
                                             <Image src={job.logo} alt="" width={44} height={44} />
                                         ) : (

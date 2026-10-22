@@ -114,6 +114,11 @@
     }
 }
 
+// Dark-on-transparent marks (e.g. Meetanshi) need a light tile to stay visible in dark mode
+.logoLight {
+    background: #f4f4f1;
+}
+
 .monogram {
     font-family: var(--font-display);
     font-size: 22px;
